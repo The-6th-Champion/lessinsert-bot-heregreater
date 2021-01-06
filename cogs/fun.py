@@ -42,31 +42,19 @@ class Fun(commands.Cog):
       await ctx.send("Please recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
     elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
       await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
-    else:
+    elif str(ctx.author.id) not in ids:
       db.push(str(ctx.author.id))
+    else:
+      await ctx.send("You have already become one with the 6th Champion!")
       
   @commands.command()
   async def disciple(self, ctx, *, message=None):
-    """
-    disciple = False
-    ids = db.get()
-    for i in ids.each():
-      if i.val() == str(ctx.author.id):
-        disciple = True
-    """
-
-    with open("./data/disciples.txt", "r") as f:
-      parse = f.read().split("\n")
     if str(ctx.author.id) == '654142589783769117':
       await ctx.send(":open_mouth:...it is....an honor....it is actually you. :person_bowing: all hail The true **6th Champion**.")
     elif str(ctx.author.id) in ids:
       await ctx.send("You are a verified disciple of the 6th Champion!")
     else:
       await ctx.send("You have not been verfied as a disciple of the 6th Champion")
-    """
-    elif str(ctx.author.id) == "347145371140489218":
-      await ctx.send("Greetings, my **Flamekeeper**, Defender of the 6th Champion")
-    """
     
 
 def setup(client):
