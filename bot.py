@@ -304,10 +304,10 @@ async def credits(ctx):
     em = discord.Embed(
         title="Credits",
         description=
-        "Creator/Owner: <insert name here>#XXXX\nProfile Picture: <insert name here>#XXXX\nIf you found this command, have a cookie :cookie: lol. :)"
+        "Creator/Owner: <insert name here>#XXXX\nProfile Picture: <insert name here>#XXXX\nBig helpers and contributers: ElectronDev and Fumseck of Zeldevs, Isukali"
     )
+    em.set_footer(text = "If you found this command, have a cookie :cookie: lol. :)"
     await ctx.send(embed=em)
-
 
 #@client.event
 #async def on_message(message):
