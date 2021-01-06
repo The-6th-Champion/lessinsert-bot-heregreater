@@ -17,6 +17,26 @@ class Fun(commands.Cog):
       if message == None:
           await ctx.send("Please Provide a message! ex `.say message`")
       await ctx.send(message)
+  @commands.command()
+  async def bowdown(self, ctx, *, message=None):
+    if message == None:
+      await ctx.send("Please recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
+    elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
+      await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
+    else:
+      with open("./data/disciples.txt", "a") as f:
+        f.write(str(ctx.author.id) + "\n")
+  @commands.command()
+  async def disciple(self, ctx, *, message=None):
+    with open("./data/disciples.txt", "a") as f:
+      parse = f.read().split("\n")
+    if str(ctx.author.id) in parse:
+      await ctx.send("You are a verified disciple of the 6th Champion!")
+    elif str(ctx.author.id) == '654142589783769117':
+      await ctx.send(":open_mouth:...it is....an honor....it is actually you. :person_bowing: all hail The true **6th Champion**.")
+    else:
+      await ctx.send("You have not been verfied as a disciple of the 6th Champion")
+    
 
 def setup(client):
   client.add_cog(Fun(client))
