@@ -25,6 +25,7 @@ class Say(commands.Cog):
       howru2 = "hru" in message1
       hbu = "hbu" in message1
       hbu2 = "how about you" in message1
+      bowdown = "Bow down to the 6th Champion!" in message1
       if hello1 ==True and hello2 ==True:
         await message.channel.send(f"*General Kenobi*")
       elif hello1 ==True and hello2 != True:
@@ -41,6 +42,8 @@ class Say(commands.Cog):
         await message.channel.send("I am pretty good, hbu?")
       elif hbu ==True or hbu2==True:
         await message.channel.send("I am pretty good.")
+      elif bowdown == True:
+        await message.channel.send("It must be done!")
       pass
   @commands.command()
   async def sayinfo(self,ctx):
