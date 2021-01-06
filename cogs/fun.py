@@ -47,7 +47,7 @@ class Fun(commands.Cog):
     ids = db.get()
     ids = ids.val
     for i in ids.each():
-      ctx.send(i.val())
+      await ctx.send(i.val())
     await ctx.send(ids.val())
     with open("./data/disciples.txt", "r") as f:
       parse = f.read().split("\n")
