@@ -45,7 +45,6 @@ class Fun(commands.Cog):
   async def disciple(self, ctx, *, message=None):
     disciple = False
     ids = db.get()
-    ids = ids.val
     for i in ids.each():
       await ctx.send(i.val())
     await ctx.send(ids.val())
