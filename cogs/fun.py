@@ -16,6 +16,10 @@ config = {
 #firebase = firebase.FirebaseApplication("https://less-insert-bot-here-greater-default-rtdb.firebaseio.com/")
 firebase = pyrebase.initialize_app(config)
 db=firebase.database()
+dbids = db.get()
+ids = []
+for i in dbids.each():
+  ids.append(i.val())
 class Fun(commands.Cog):
 
   def __init__(self,client):
@@ -43,17 +47,19 @@ class Fun(commands.Cog):
       
   @commands.command()
   async def disciple(self, ctx, *, message=None):
+    """
     disciple = False
     ids = db.get()
     for i in ids.each():
       if i.val() == str(ctx.author.id):
         disciple = True
+    """
 
     with open("./data/disciples.txt", "r") as f:
       parse = f.read().split("\n")
     if str(ctx.author.id) == '654142589783769117':
       await ctx.send(":open_mouth:...it is....an honor....it is actually you. :person_bowing: all hail The true **6th Champion**.")
-    elif disciple == True:
+    elif str(ctx.author.id) in ids:
       await ctx.send("You are a verified disciple of the 6th Champion!")
     else:
       await ctx.send("You have not been verfied as a disciple of the 6th Champion")
