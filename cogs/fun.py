@@ -1,6 +1,21 @@
 import discord
 from discord.ext import commands
+from firebase import firebase
+import pyrebase
 
+config = {
+    "apiKey": "AIzaSyCWPSVy-1jPpSup_mNm2wNzzyzwnM4tn6M",
+    "authDomain": "less-insert-bot-here-greater.firebaseapp.com",
+    "databaseURL": "https://less-insert-bot-here-greater-default-rtdb.firebaseio.com",
+    "projectId": "less-insert-bot-here-greater",
+    "storageBucket": "less-insert-bot-here-greater.appspot.com",
+    "messagingSenderId": "328700534390",
+    "appId": "1:328700534390:web:f2b11d24e439f924098957",
+    "measurementId": "G-79TMJX9X3G"
+}
+#firebase = firebase.FirebaseApplication("https://less-insert-bot-here-greater-default-rtdb.firebaseio.com/")
+firebase = pyrebase.initialize_app(config)
+db=firebase.database()
 class Fun(commands.Cog):
 
   def __init__(self,client):
@@ -24,12 +39,11 @@ class Fun(commands.Cog):
     elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
       await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
     else:
-      with open("./data/disciples.txt", "w") as f:
-        parse = f.read()
-        if str(ctx.author.id) not in parse:
-          f.write(str(ctx.author.id))
+      db.push(str(ctx.author.id))
+      
   @commands.command()
   async def disciple(self, ctx, *, message=None):
+    
     with open("./data/disciples.txt", "r") as f:
       parse = f.read().split("\n")
     if str(ctx.author.id) == '654142589783769117':
