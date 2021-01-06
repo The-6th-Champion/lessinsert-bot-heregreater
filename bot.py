@@ -243,7 +243,6 @@ async def bowdown(ctx):
         description=
         "``>>bowdown <verify phrase>``\t This is a command that will add you to the 6th champion disciple club. You can check your status with the `disciple` command. This is for fun, I do not mean to offend any religious beliefs. Have fun, and join the club!",
         color=discord.Color(0x9ef))
-    em.add_field(name="Permissions", value="manage messages is required")
     await ctx.send(embed=em)
 
 @help.command()
@@ -253,7 +252,6 @@ async def disciple(ctx):
         description=
         "`>>disciple`\t This is a way to check if you are a follower of the 6th champion. dont worry this is a joke command, allong with `bowdown` and I do not mean to offend any religious beliefs. Have fun, and join the club!",
         color=discord.Color(0x9ef))
-    em.add_field(name="Permissions", value="manage messages is required")
     await ctx.send(embed=em)
 
 # Cog stuff
