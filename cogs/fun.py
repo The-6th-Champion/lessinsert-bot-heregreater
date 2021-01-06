@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from firebase import firebase
 import pyrebase
 
 config = {
