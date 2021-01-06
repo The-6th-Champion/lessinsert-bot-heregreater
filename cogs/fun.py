@@ -46,8 +46,9 @@ class Fun(commands.Cog):
     disciple = False
     ids = db.get()
     for i in ids.each():
-      await ctx.send(i.val())
-    await ctx.send(ids.val())
+      if i.val() == str(ctx.author.id):
+        disciple = True
+
     with open("./data/disciples.txt", "r") as f:
       parse = f.read().split("\n")
     if str(ctx.author.id) == '654142589783769117':
