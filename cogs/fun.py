@@ -48,12 +48,15 @@ class Fun(commands.Cog):
       parse = f.read().split("\n")
     if str(ctx.author.id) == '654142589783769117':
       await ctx.send(":open_mouth:...it is....an honor....it is actually you. :person_bowing: all hail The true **6th Champion**.")
-    elif str(ctx.author.id) == "347145371140489218":
-      await ctx.send("Greetings, my **Flamekeeper**, Defender of the 6th Champion")
+    
     elif str(ctx.author.id) in ids.val():
       await ctx.send("You are a verified disciple of the 6th Champion!")
     else:
       await ctx.send("You have not been verfied as a disciple of the 6th Champion")
+    """
+    elif str(ctx.author.id) == "347145371140489218":
+      await ctx.send("Greetings, my **Flamekeeper**, Defender of the 6th Champion")
+    """
     
 
 def setup(client):
