@@ -25,7 +25,7 @@ class Say(commands.Cog):
       howru2 = "hru" in message1
       hbu = "hbu" in message1
       hbu2 = "how about you" in message1
-      bowdown = "Bow down to the 6th Champion!" in message1
+      bowdown = "bow down to the 6th champion!" in message1
       if hello1 ==True and hello2 ==True:
         await message.channel.send(f"*General Kenobi*")
       elif hello1 ==True and hello2 != True:
