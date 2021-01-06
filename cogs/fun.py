@@ -24,11 +24,13 @@ class Fun(commands.Cog):
     elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
       await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
     else:
-      with open("./data/disciples.txt", "a") as f:
-        f.write(str(ctx.author.id) + "\n")
+      with open("./data/disciples.txt", "r+") as f:
+        parse = f.read()
+        if str(ctx.author.id) not in parse:
+          f.write(str(ctx.author.id))
   @commands.command()
   async def disciple(self, ctx, *, message=None):
-    with open("./data/disciples.txt", "a") as f:
+    with open("./data/disciples.txt", "r") as f:
       parse = f.read().split("\n")
     if str(ctx.author.id) == '654142589783769117':
       await ctx.send(":open_mouth:...it is....an honor....it is actually you. :person_bowing: all hail The true **6th Champion**.")
