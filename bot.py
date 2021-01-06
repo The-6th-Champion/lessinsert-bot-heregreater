@@ -1,7 +1,5 @@
 import discord
 from discord.ext import commands
-import webserver
-from webserver import keep_alive
 import os
 import asyncio
 
@@ -324,7 +322,6 @@ async def sudosay(ctx, channel: discord.TextChannel, *, message):
     await channel.send(message)
 
 
-keep_alive()
 client.run(TOKEN)
 
 # \t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages
