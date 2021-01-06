@@ -43,6 +43,7 @@ class Say(commands.Cog):
       elif hbu ==True or hbu2==True:
         await message.channel.send("I am pretty good.")
       elif bowdown == True:
+        await message.channel.send("It must be done!")
         await message.channel.send(file=discord.File('./gifs/praisechampion.gif'))
       pass
   @commands.command()
