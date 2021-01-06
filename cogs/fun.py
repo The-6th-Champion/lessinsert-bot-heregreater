@@ -45,10 +45,9 @@ class Fun(commands.Cog):
   async def disciple(self, ctx, *, message=None):
     disciple = False
     ids = db.get()
-    ids = ids.val()
-    for i in ids:
-      if i[1] == str(ctx.author.id):
-        disciple = True
+    ids = ids.val
+    for i in ids.each():
+      ctx.send(i.val())
     await ctx.send(ids.val())
     with open("./data/disciples.txt", "r") as f:
       parse = f.read().split("\n")
