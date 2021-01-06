@@ -44,7 +44,7 @@ class Fun(commands.Cog):
   async def disciple(self, ctx, *, message=None):
     
     ids = db.get()
-    await ctx.send(ids)
+    await ctx.send(ids.val())
     with open("./data/disciples.txt", "r") as f:
       parse = f.read().split("\n")
     if str(ctx.author.id) == '654142589783769117':
