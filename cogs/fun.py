@@ -24,7 +24,7 @@ class Fun(commands.Cog):
     elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
       await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
     else:
-      with open("./data/disciples.txt", "r+") as f:
+      with open("./data/disciples.txt", "w") as f:
         parse = f.read()
         if str(ctx.author.id) not in parse:
           f.write(str(ctx.author.id))
