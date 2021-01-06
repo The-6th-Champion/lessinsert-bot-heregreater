@@ -5,7 +5,7 @@ import asyncio
 
 client = commands.Bot(command_prefix=commands.when_mentioned_or('>>'))
 client.remove_command("help")
-TOKEN = TOKEN = os.environ.get("TOKEN")
+#TOKEN = TOKEN = os.environ.get("TOKEN")
 
 
 # make sure I am doing this
@@ -322,7 +322,7 @@ async def sudosay(ctx, channel: discord.TextChannel, *, message):
     await channel.send(message)
 
 
-client.run(TOKEN)
-
+#client.run(TOKEN)
+client.run("NzgwOTI4NzgxODU4MzczNjcy.X72Omg.cpqfuVDe6JcaAlYBcmqQFF-t_YM")
 # \t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages
 #  \t- if you dont supply any number, the bot will just delete your command message
