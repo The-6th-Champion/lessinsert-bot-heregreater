@@ -3,4 +3,3 @@ async-timeout==3.0.1
 pandas
 PyNaCl==1.3.0
 dnspython==1.16.0
-git+https://github/Rapptz/discord.py@rewrite
