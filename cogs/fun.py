@@ -44,6 +44,7 @@ class Fun(commands.Cog):
       await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
     elif str(ctx.author.id) not in ids:
       db.push(str(ctx.author.id))
+      await.ctx.sent("You have become one with the 6th Champion!")
     else:
       await ctx.send("You have already become one with the 6th Champion!")
       
