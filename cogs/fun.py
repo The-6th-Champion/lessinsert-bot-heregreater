@@ -6,6 +6,7 @@ from discord.ext import commands
 import pyrebase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+import os
 import time
 
 config = {
@@ -79,7 +80,9 @@ class Fun(commands.Cog):
     await ctx.send("Getting chat ready...")
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    driver = webdriver.Chrome(executable_path="./webdriver/chromedriver.exe", chrome_options=options)
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
     driver.get('https://www.cleverbot.com/')
     button = driver.find_element_by_id('noteb')
     button.click()
