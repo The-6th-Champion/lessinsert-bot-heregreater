@@ -78,6 +78,7 @@ class Fun(commands.Cog):
     global text_area
     await ctx.send("Getting chat ready...")
     options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
     driver = webdriver.Chrome(executable_path="./webdriver/chromedriver.exe", chrome_options=options)
     driver.get('https://www.cleverbot.com/')
     button = driver.find_element_by_id('noteb')
