@@ -4,6 +4,9 @@ from bot import disciple
 import discord
 from discord.ext import commands
 import pyrebase
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
 
 config = {
     "apiKey": "AIzaSyCWPSVy-1jPpSup_mNm2wNzzyzwnM4tn6M",
@@ -66,6 +69,29 @@ class Fun(commands.Cog):
       await ctx.send("You are a verified disciple of the 6th Champion!")
     else:
       await ctx.send("You have not been verfied as a disciple of the 6th Champion")
+  @commands.command()
+  async def startchat(self, ctx, *, message=None):
+    global driver
+    global text_area
+    await ctx.send("Getting chat ready...")
+    options = webdriver.ChromeOptions()
+    driver = webdriver.Chrome(executable_path="./webdriver/chromedriver.exe", chrome_options=options)
+    driver.get('https://www.cleverbot.com/')
+    button = driver.find_element_by_id('noteb')
+    button.click()
+    text_area = driver.find_element_by_xpath('//*[@id="avatarform"]/input[1]')
+    await ctx.send("Chat ready! Say something using >>tellbot")
+  @commands.command()
+  async def tellbot(self, ctx, *, message=None):
+    text_area.send_keys(message)
+    text_area.send_keys(Keys.RETURN)
+    time.sleep(5)
+    botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
+    await ctx.send(botresponse)
+  @commands.command()
+  async def endchat(self, ctx, *, message=None):
+    await driver.close()
+    await ctx.send("Chat ended!")
 def setup(client):
   client.add_cog(Fun(client))
   print("fun is online")
