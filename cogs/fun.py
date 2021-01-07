@@ -47,7 +47,7 @@ class Fun(commands.Cog):
     elif str(ctx.author.id) not in ids:
       db.push(str(ctx.author.id))
       ids.append(str(ctx.author.id))
-      insertguild =  client.Client.get_guild(764927590070353940)
+      insertguild =  discord.utils.get(client.Client.get_guild(), guild__name="<Insert Server Here>")
       role = discord.utils.get(insertguild, name="<Disciple>")
       user = ctx.message.author
       await Member.add_roles(user, role)
