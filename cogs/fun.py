@@ -92,6 +92,8 @@ class Fun(commands.Cog):
       button.click()
       text_area = driver.find_element_by_xpath('//*[@id="avatarform"]/input[1]')
       await ctx.send("Chat ready! Say something using >>tellbot")
+    else:
+      await ctx.send("You are already chatting with me!")
   @commands.command()
   async def tellbot(self, ctx, *, message=None):
     if isChattingClever == True:
@@ -100,6 +102,8 @@ class Fun(commands.Cog):
       time.sleep(5)
       botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
       await ctx.send(botresponse)
+    else:
+      await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
   @commands.command()
   async def endchat(self, ctx, *, message=None):
     global isChattingClever
@@ -107,6 +111,8 @@ class Fun(commands.Cog):
       isChattingClever = False
       await driver.close()
       await ctx.send("Chat ended!")
+    else:
+      await ctx.send("You haven't started a conversation with me. >>startchat to start one now!")
 def setup(client):
   client.add_cog(Fun(client))
   print("fun is online")
