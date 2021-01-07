@@ -50,10 +50,11 @@ class Fun(commands.Cog):
       role = discord.utils.get(ctx.guild.roles, name="<Disciple>")
       user = ctx.message.author
       await Member.add_roles(user, role)
-      #await user.add_roles(role)
       await ctx.send("You have become one with the 6th Champion!")
     else:
+      await ctx.send(ctx.Guild.id)
       await ctx.send("You have already become one with the 6th Champion!")
+
       
   @commands.command()
   async def disciple(self, ctx, *, message=None):
