@@ -26,6 +26,7 @@ dbids = db.get()
 ids = []
 for i in dbids.each():
   ids.append(i.val())
+isChattingClever = False
 class Fun(commands.Cog):
 
   def __init__(self,client):
@@ -77,28 +78,35 @@ class Fun(commands.Cog):
   async def startchat(self, ctx, *, message=None):
     global driver
     global text_area
-    await ctx.send("Getting chat ready...")
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
-    driver.get('https://www.cleverbot.com/')
-    button = driver.find_element_by_id('noteb')
-    button.click()
-    text_area = driver.find_element_by_xpath('//*[@id="avatarform"]/input[1]')
-    await ctx.send("Chat ready! Say something using >>tellbot")
+    global isChattingClever
+    if isChattingClever == False:
+      isChattingClever = True
+      await ctx.send("Getting chat ready...")
+      options = webdriver.ChromeOptions()
+      options.add_argument("--headless")
+      options.add_argument("--disable-dev-shm-usage")
+      options.add_argument("--no-sandbox")
+      driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
+      driver.get('https://www.cleverbot.com/')
+      button = driver.find_element_by_id('noteb')
+      button.click()
+      text_area = driver.find_element_by_xpath('//*[@id="avatarform"]/input[1]')
+      await ctx.send("Chat ready! Say something using >>tellbot")
   @commands.command()
   async def tellbot(self, ctx, *, message=None):
-    text_area.send_keys(message)
-    text_area.send_keys(Keys.RETURN)
-    time.sleep(5)
-    botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
-    await ctx.send(botresponse)
+    if isChattingClever == True:
+      text_area.send_keys(message)
+      text_area.send_keys(Keys.RETURN)
+      time.sleep(5)
+      botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
+      await ctx.send(botresponse)
   @commands.command()
   async def endchat(self, ctx, *, message=None):
-    await driver.close()
-    await ctx.send("Chat ended!")
+    global isChattingClever
+    if isChattingClever == True:
+      isChattingClever = False
+      await driver.close()
+      await ctx.send("Chat ended!")
 def setup(client):
   client.add_cog(Fun(client))
   print("fun is online")
