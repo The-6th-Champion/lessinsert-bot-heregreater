@@ -47,7 +47,8 @@ class Fun(commands.Cog):
       db.push(str(ctx.author.id))
       ids.append(str(ctx.author.id))
       member = guild.Guild.get_member(ctx.author.id)
-      await member.add_roles(guild.Guild.get_role(796774991399878676))
+      await client.Member.add_roles(796774991399878676)
+      #await member.add_roles(guild.Guild.get_role(796774991399878676))
       await ctx.send("You have become one with the 6th Champion!")
     else:
       await ctx.send("You have already become one with the 6th Champion!")
