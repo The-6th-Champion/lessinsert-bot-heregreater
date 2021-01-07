@@ -52,7 +52,7 @@ class Fun(commands.Cog):
       await Member.add_roles(user, role)
       await ctx.send("You have become one with the 6th Champion!")
     else:
-      await ctx.send(ctx.Guild.id)
+      await ctx.send(ctx.author.guild.id)
       await ctx.send("You have already become one with the 6th Champion!")
 
       
