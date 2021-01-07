@@ -108,8 +108,9 @@ class Fun(commands.Cog):
   async def endchat(self, ctx, *, message=None):
     global isChattingClever
     if isChattingClever == True:
+      ctx.send("Ending chat...")
       isChattingClever = False
-      await driver.close()
+      driver.close()
       await ctx.send("Chat ended!")
     else:
       await ctx.send("You haven't started a conversation with me. >>startchat to start one now!")
