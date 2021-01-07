@@ -46,7 +46,7 @@ class Fun(commands.Cog):
     elif str(ctx.author.id) not in ids:
       db.push(str(ctx.author.id))
       ids.append(str(ctx.author.id))
-      await client.Member.add_roles(796774991399878676)
+      await ctx.author.add_roles(796774991399878676)
       #await member.add_roles(guild.Guild.get_role(796774991399878676))
       await ctx.send("You have become one with the 6th Champion!")
     else:
