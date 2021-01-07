@@ -46,7 +46,7 @@ class Fun(commands.Cog):
     elif str(ctx.author.id) not in ids:
       db.push(str(ctx.author.id))
       ids.append(str(ctx.author.id))
-      role = discord.utils.get(ctx.guild.roles, name="Disciple")
+      role = discord.utils.get(ctx.guild.roles, name="<Disciple>")
       user = ctx.message.author
       await user.add_roles(role)
       await ctx.send("You have become one with the 6th Champion!")
