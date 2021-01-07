@@ -47,7 +47,7 @@ class Fun(commands.Cog):
       db.push(str(ctx.author.id))
       ids.append(str(ctx.author.id))
       member = ctx.author.id
-      await member.add_roles(796774991399878676)
+      await ctx.author.add_roles(796774991399878676)
       await ctx.send("You have become one with the 6th Champion!")
     else:
       await ctx.send("You have already become one with the 6th Champion!")
