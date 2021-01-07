@@ -48,7 +48,8 @@ class Fun(commands.Cog):
       ids.append(str(ctx.author.id))
       role = discord.utils.get(ctx.guild.roles, name="<Disciple>")
       user = ctx.message.author
-      await user.add_roles(role)
+      await discord.Client.user(ctx.author.id).add_roles(role)
+      #await user.add_roles(role)
       await ctx.send("You have become one with the 6th Champion!")
     else:
       await ctx.send("You have already become one with the 6th Champion!")
