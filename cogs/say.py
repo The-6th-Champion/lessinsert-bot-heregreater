@@ -47,7 +47,7 @@ class Say(commands.Cog):
       elif bowdown == True or praisechamp == True:
         await message.channel.send("It must be done!")
         await message.channel.send(file=discord.File('./gifs/praisechampion.gif'))
-      elif bowdownl ==True:
+      elif bowdownl ==True and link1 = True:
         await message.channel.send("smh no")
       pass
   @commands.command()
