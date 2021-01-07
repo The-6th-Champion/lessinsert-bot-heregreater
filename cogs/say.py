@@ -38,7 +38,7 @@ class Say(commands.Cog):
         await message.channel.send("<insert name here> is __**The Creator**__. He is also known as The 6th Champion, Da6thChamp,  and <The 6th Champion>. He developed me, and also has a support server. He is amazing. Bow down to him :person_bowing:!!!")
       elif why == True:
         await message.channel.send("why not?")
-      elif link1 ==True:
+      elif link1 ==True and bowdownl ==False:
         await message.channel.send("The hero of hyrule. He is resurrected a lot.")
       elif howru ==True or howru2==True:
         await message.channel.send("I am pretty good, hbu?")
@@ -47,7 +47,7 @@ class Say(commands.Cog):
       elif bowdown == True or praisechamp == True:
         await message.channel.send("It must be done!")
         await message.channel.send(file=discord.File('./gifs/praisechampion.gif'))
-      elif bowdownl ==True and link1 = True:
+      elif bowdownl ==True and link1 == True:
         await message.channel.send("smh no")
       pass
   @commands.command()
