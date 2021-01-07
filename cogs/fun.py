@@ -1,4 +1,5 @@
 from discord import client, guild
+from discord.member import Member
 from bot import disciple
 import discord
 from discord.ext import commands
@@ -48,7 +49,7 @@ class Fun(commands.Cog):
       ids.append(str(ctx.author.id))
       role = discord.utils.get(ctx.guild.roles, name="<Disciple>")
       user = ctx.message.author
-      await client.Client.add_roles(user, role)
+      await Member.add_roles(user, role)
       #await user.add_roles(role)
       await ctx.send("You have become one with the 6th Champion!")
     else:
