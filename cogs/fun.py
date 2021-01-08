@@ -118,6 +118,7 @@ class Fun(commands.Cog):
       await page.waitForSelector("#snipTextIcon")
       botelement = await page.querySelector("#line1 > span.bot")
       botresponse = await page.evaluate('(element) => element.textContent', botelement)
+      await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
     
@@ -140,6 +141,7 @@ class Fun(commands.Cog):
   @commands.command()
   async def endchat(self, ctx, *, message=None):
     global isChattingClever
+    global browser
     if isChattingClever == True:
       isChattingClever = False
       browser.close()
