@@ -144,7 +144,7 @@ class Fun(commands.Cog):
     global browser
     if isChattingClever == True:
       isChattingClever = False
-      browser.close()
+      await browser.close()
       await ctx.send("Chat ended")
     else:
       await ctx.send("You haven't started a conversation with me. >>startchat to start one now!")
