@@ -100,12 +100,16 @@ class Fun(commands.Cog):
     if isChattingClever == True:
       text_area.send_keys(message)
       text_area.send_keys(Keys.RETURN)
+      checkIfDone = False
       async with ctx.typing():
         # do expensive stuff here
-        await asyncio.sleep(5)
+        while checkIfDone == False:
+          try:
+            check = check = driver.find_element_by_xpath('//*[@id="snipTextIcon"]')
+            await checkIfDone = True
+          except:
+            await checkIfDone = False
         botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
-        
-      
       await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
