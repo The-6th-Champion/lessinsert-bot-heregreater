@@ -7,8 +7,7 @@ import pyrebase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import os
-import time
-import asyncio
+import threading
 
 config = {
     "apiKey": "AIzaSyCWPSVy-1jPpSup_mNm2wNzzyzwnM4tn6M",
@@ -21,6 +20,7 @@ config = {
     "measurementId": "G-79TMJX9X3G"
 }
 #firebase = firebase.FirebaseApplication("https://less-insert-bot-here-greater-default-rtdb.firebaseio.com/")
+
 firebase = pyrebase.initialize_app(config)
 db=firebase.database()
 dbids = db.get()
@@ -123,6 +123,9 @@ class Fun(commands.Cog):
       await ctx.send("Chat ended!")
     else:
       await ctx.send("You haven't started a conversation with me. >>startchat to start one now!")
+  t1 = threading.Thread(target=startchat)
+  t1.start()
 def setup(client):
   client.add_cog(Fun(client))
   print("fun is online")
+
