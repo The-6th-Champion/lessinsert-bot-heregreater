@@ -20,11 +20,11 @@ class Say(commands.Cog):
       e1 = "é" in message1
       inh1 = "<insert name here>" in message1
       link1="link" in message1
-      why = "why" in message1
-      howru = "how are you" in message1
-      howru2 = "hru" in message1
-      hbu = "hbu" in message1
-      hbu2 = "how about you" in message1
+      #why = "why" in message1
+      #howru = "how are you" in message1
+      #howru2 = "hru" in message1
+      #hbu = "hbu" in message1
+      #hbu2 = "how about you" in message1
       bowdown = "bow down to the 6th champion!" in message1
       praisechamp = "praise the 6th champion!" in message1
       bowdownl = "bow down to link" in message1
@@ -36,14 +36,14 @@ class Say(commands.Cog):
         await message.channel.send(f"é")
       elif inh1 ==True:
         await message.channel.send("<insert name here> is __**The Creator**__. He is also known as The 6th Champion, Da6thChamp,  and <The 6th Champion>. He developed me, and also has a support server. He is amazing. Bow down to him :person_bowing:!!!")
-      elif why == True:
-        await message.channel.send("why not?")
+      #elif why == True:
+        #await message.channel.send("why not?")
       elif link1 ==True and bowdownl ==False:
         await message.channel.send("The hero of hyrule. He is resurrected a lot.")
-      elif howru ==True or howru2==True:
-        await message.channel.send("I am pretty good, hbu?")
-      elif hbu ==True or hbu2==True:
-        await message.channel.send("I am pretty good.")
+      #elif howru ==True or howru2==True:
+        #await message.channel.send("I am pretty good, hbu?")
+      #elif hbu ==True or hbu2==True:
+        #await message.channel.send("I am pretty good.")
       elif bowdown == True or praisechamp == True:
         await message.channel.send("It must be done!")
         await message.channel.send(file=discord.File('./gifs/praisechampion.gif'))

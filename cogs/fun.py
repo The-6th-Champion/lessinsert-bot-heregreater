@@ -8,6 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import os
 import time
+import asyncio
 
 config = {
     "apiKey": "AIzaSyCWPSVy-1jPpSup_mNm2wNzzyzwnM4tn6M",
@@ -99,8 +100,11 @@ class Fun(commands.Cog):
     if isChattingClever == True:
       text_area.send_keys(message)
       text_area.send_keys(Keys.RETURN)
-      time.sleep(5)
-      botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
+      async with ctx.typing():
+        # do expensive stuff here
+        botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
+        await asyncio.sleep(5)
+      
       await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
