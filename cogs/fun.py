@@ -102,8 +102,9 @@ class Fun(commands.Cog):
       text_area.send_keys(Keys.RETURN)
       async with ctx.typing():
         # do expensive stuff here
-        botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
         await asyncio.sleep(5)
+        botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
+        
       
       await ctx.send(botresponse)
     else:
