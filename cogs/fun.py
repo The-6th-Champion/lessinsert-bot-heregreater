@@ -105,10 +105,10 @@ class Fun(commands.Cog):
         # do expensive stuff here
         while checkIfDone == False:
           try:
-            check = check = driver.find_element_by_xpath('//*[@id="snipTextIcon"]')
-            await checkIfDone = True
+            check = driver.find_element_by_xpath('//*[@id="snipTextIcon"]')
+            checkIfDone = True
           except:
-            await checkIfDone = False
+            checkIfDone = False
         botresponse = driver.find_element_by_xpath("//*[@id='line1']/span[1]").text
       await ctx.send(botresponse)
     else:
