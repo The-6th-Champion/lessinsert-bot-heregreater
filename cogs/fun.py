@@ -87,10 +87,10 @@ class Fun(commands.Cog):
       options.add_argument("--headless")
       options.add_argument("--disable-dev-shm-usage")
       options.add_argument("--no-sandbox")
-      driver = await webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
-      await driver.get('https://www.cleverbot.com/')
+      driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
+      driver.get('https://www.cleverbot.com/')
       button = driver.find_element_by_id('noteb')
-      await button.click()
+      button.click()
       text_area = driver.find_element_by_xpath('//*[@id="avatarform"]/input[1]')
       await ctx.send("Chat ready! Say something using >>tellbot")
     else:
