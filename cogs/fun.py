@@ -88,9 +88,9 @@ class Fun(commands.Cog):
       options.add_argument("--disable-dev-shm-usage")
       options.add_argument("--no-sandbox")
       driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
-      driver.get('https://www.cleverbot.com/')
+      await driver.get('https://www.cleverbot.com/')
       button = driver.find_element_by_id('noteb')
-      button.click()
+      await button.click()
       text_area = driver.find_element_by_xpath('//*[@id="avatarform"]/input[1]')
       await ctx.send("Chat ready! Say something using >>tellbot")
     else:
@@ -103,7 +103,7 @@ class Fun(commands.Cog):
       checkIfDone = False
       async with ctx.typing():
         # do expensive stuff here
-        while await checkIfDone == False:
+        while checkIfDone == False:
           try:
             check = driver.find_element_by_xpath('//*[@id="snipTextIcon"]')
             checkIfDone = True
