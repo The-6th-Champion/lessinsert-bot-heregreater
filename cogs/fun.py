@@ -26,9 +26,9 @@ dbids = db.get()
 ids = []
 for i in dbids.each():
   ids.append(i.val())
-isChattingClever = False
-class Fun(commands.Cog):
 
+class Fun(commands.Cog):
+  isChattingClever = False
   def __init__(self,client):
 
     self.client = client
