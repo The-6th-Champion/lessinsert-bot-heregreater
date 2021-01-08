@@ -87,7 +87,7 @@ class Fun(commands.Cog):
       options.add_argument("--headless")
       options.add_argument("--disable-dev-shm-usage")
       options.add_argument("--no-sandbox")
-      driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
+      driver = await webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=options)
       await driver.get('https://www.cleverbot.com/')
       button = driver.find_element_by_id('noteb')
       await button.click()
