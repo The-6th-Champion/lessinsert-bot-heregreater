@@ -103,7 +103,7 @@ class Fun(commands.Cog):
       checkIfDone = False
       async with ctx.typing():
         # do expensive stuff here
-        while checkIfDone == False:
+        while await checkIfDone == False:
           try:
             check = driver.find_element_by_xpath('//*[@id="snipTextIcon"]')
             checkIfDone = True
