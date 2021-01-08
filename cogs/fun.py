@@ -83,6 +83,7 @@ class Fun(commands.Cog):
     # global text_area
     global browser
     global page
+    global botelement
     global isChattingClever
     if not isChattingClever:
       isChattingClever = True
@@ -91,6 +92,7 @@ class Fun(commands.Cog):
       page = await browser.newPage()
       await page.goto("https://www.cleverbot.com/")
       await page.click('#noteb')
+      botelement = await page.querySelector("#line1 > span.bot")
       await ctx.send("Chat ready! Say something using >>tellbot")
     else:
       await ctx.send("You are already chatting with me!")
@@ -115,9 +117,9 @@ class Fun(commands.Cog):
     if isChattingClever == True:
       await page.type('#avatarform > input.stimulus', message)
       await page.keyboard.press("Enter")
-      await page.waitForSelector("#snipTextIcon")
-      botelement = await page.querySelector("#line1 > span.bot")
-      botresponse = await page.evaluate('(element) => element.textContent', botelement)
+      async with ctx.typing():
+        await page.waitForSelector("#snipTextIcon")
+        botresponse = await page.evaluate('(element) => element.textContent', botelement)
       await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
