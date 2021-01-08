@@ -87,7 +87,7 @@ class Fun(commands.Cog):
     if not isChattingClever:
       isChattingClever = True
       await ctx.send("Getting chat ready...")
-      browser = await launch()
+      browser = await launch(options={'args': ['--no-sandbox']})
       page = await browser.newPage()
       await page.goto("https://www.cleverbot.com/")
       await page.click('#noteb')
