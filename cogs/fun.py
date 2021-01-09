@@ -77,27 +77,32 @@ class Fun(commands.Cog):
   async def startchat(self, ctx, *, message=None):
     global browser
     global page
-    global botelement
     global isChattingClever
     if not isChattingClever:
       isChattingClever = True
       await ctx.send("Getting chat ready...")
       browser = await launch(options={'args': ['--no-sandbox']})
       page = await browser.newPage()
-      await page.goto("https://www.cleverbot.com/")
-      await page.click('#noteb')
-      botelement = await page.querySelector("#line1 > span.bot")
+      await page.goto("https://www.pandorabots.com/mitsuku/")
+      await page.click("#pb-widget > div > div > div.pb-widget__description > div.pb-widget__description__chat-now > button")
+      # await page.goto("https://www.cleverbot.com/")
+      # await page.click('#noteb')
+      # botelement = await page.querySelector("#line1 > span.bot")
       await ctx.send("Chat ready! Say something using >>tellbot")
     else:
       await ctx.send("You are already chatting with me!")
   @commands.command()
   async def tellbot(self, ctx, *, message=None):
     if isChattingClever == True:
-      await page.type('#avatarform > input.stimulus', message)
-      await page.keyboard.press("Enter")
+      # await page.type('#avatarform > input.stimulus', message)
+      # await page.keyboard.press("Enter")
       async with ctx.typing():
-        await page.waitForSelector("#snipTextIcon")
-        botresponse = await page.evaluate('(element) => element.textContent', botelement)
+        await page.type("#pb-widget-input-field", message)
+        await page.keyboard.press("Enter")
+        list = await page.querySelectorAll(".pb-message > div > div")
+        botresponse = await page.evaluate('(element) => element.textContent', list[len(list)-1])
+        # await page.waitForSelector("#snipTextIcon")
+        # botresponse = await page.evaluate('(element) => element.textContent', botelement)
       await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
