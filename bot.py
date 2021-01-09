@@ -42,7 +42,7 @@ async def help(ctx):
         - `startchat` starts a chat session with the bot
         - `tellbot` converse with the bot after session begins
         - `endchat` ends the session
-        *Highly recommended that only one user speaks with the bot at a time for best experience* """, inlin=False)
+        *Highly recommended that only one user speaks with the bot at a time for best experience* """, inline=False)
     embed1.add_field(
         name="Other",
         value="""
