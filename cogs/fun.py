@@ -103,6 +103,10 @@ class Fun(commands.Cog):
         while botresponse == message:
           thelist = await page.querySelectorAll(".pb-message > div > div")
           botresponse = await page.evaluate('(element) => element.textContent', thelist[len(thelist)-1])
+        if "kuki" in botresponse.lower():
+          botresponse = botresponse.replace("Kuki", "<Insert bot here>")
+        elif "pandorabots" in botresponse.lower():
+          botresponse = botresponse.replace("Pandorabots", "The 6th Champion")
         await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
