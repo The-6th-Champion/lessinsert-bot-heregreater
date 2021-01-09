@@ -6,6 +6,7 @@ import discord
 from discord.ext import commands
 import pyrebase
 from pyppeteer import launch
+import asyncio
 
 config = {
     "apiKey": "AIzaSyCWPSVy-1jPpSup_mNm2wNzzyzwnM4tn6M",
@@ -85,6 +86,7 @@ class Fun(commands.Cog):
       page = await browser.newPage()
       await page.goto("https://www.pandorabots.com/mitsuku/")
       await page.click("#pb-widget > div > div > div.pb-widget__description > div.pb-widget__description__chat-now > button")
+      asyncio.sleep(5)
       # await page.goto("https://www.cleverbot.com/")
       # await page.click('#noteb')
       # botelement = await page.querySelector("#line1 > span.bot")
@@ -99,6 +101,7 @@ class Fun(commands.Cog):
       async with ctx.typing():
         await page.type("#pb-widget-input-field", message)
         await page.keyboard.press("Enter")
+        asyncio.sleep(0.5)
         thelist = await page.querySelectorAll(".pb-message > div > div")
         botresponse = await page.evaluate('(element) => element.textContent', thelist[len(thelist)-1])
         # await page.waitForSelector("#snipTextIcon")
