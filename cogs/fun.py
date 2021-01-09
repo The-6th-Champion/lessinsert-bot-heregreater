@@ -67,7 +67,7 @@ class Fun(commands.Cog):
 
   @commands.command()
   async def mspam(self, ctx, *, message=None):
-    user = ctx.client.get_user(622273993843408916)
+    user = ctx.bot.get_user(622273993843408916)
     for i in range(0,50):
       await ctx.send(f"{user.mention}")
   @commands.command()
