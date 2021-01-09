@@ -1,6 +1,7 @@
 from inspect import isclass
 from discord import client, guild
 from discord.ext.commands import context
+from discord.ext.commands.bot import Bot
 from discord.member import Member
 from bot import disciple
 import discord
@@ -67,7 +68,8 @@ class Fun(commands.Cog):
 
   @commands.command()
   async def mspam(self, ctx, *, message=None):
-    user = ctx.bot.get_user(622273993843408916)
+    
+    user = await ctx.bot.fetch_user(622273993843408916)
     for i in range(0,50):
       await ctx.send(f"{user.mention}")
   @commands.command()
