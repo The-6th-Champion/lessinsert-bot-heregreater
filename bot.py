@@ -346,8 +346,8 @@ async def credits(ctx):
 @client.command(hidden=True, aliases=['ss'])
 @commands.check(is_it_me)
 async def sudosay(ctx, channel: discord.TextChannel, *, message):
-    await channel.send(message)
     await ctx.send("Success!!")
+    await channel.send(message)
 
 
 #client.run(TOKEN)
