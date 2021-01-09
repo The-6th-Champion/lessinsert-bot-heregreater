@@ -99,11 +99,11 @@ class Fun(commands.Cog):
       async with ctx.typing():
         await page.type("#pb-widget-input-field", message)
         await page.keyboard.press("Enter")
-        list = await page.querySelectorAll(".pb-message > div > div")
-        botresponse = await page.evaluate('(element) => element.textContent', list[len(list)-1])
+        thelist = await page.querySelectorAll(".pb-message > div > div")
+        botresponse = await page.evaluate('(element) => element.textContent', thelist[len(thelist)-1])
         # await page.waitForSelector("#snipTextIcon")
         # botresponse = await page.evaluate('(element) => element.textContent', botelement)
-      await ctx.send(botresponse)
+        await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
   @commands.command()
