@@ -88,25 +88,21 @@ class Fun(commands.Cog):
       await page.goto("https://www.pandorabots.com/mitsuku/")
       await page.click("#pb-widget > div > div > div.pb-widget__description > div.pb-widget__description__chat-now > button")
       time.sleep(5)
-      # await page.goto("https://www.cleverbot.com/")
-      # await page.click('#noteb')
-      # botelement = await page.querySelector("#line1 > span.bot")
       await ctx.send("Chat ready! Say something using >>tellbot")
     else:
       await ctx.send("You are already chatting with me!")
   @commands.command()
   async def tellbot(self, ctx, *, message=None):
     if isChattingClever == True:
-      # await page.type('#avatarform > input.stimulus', message)
-      # await page.keyboard.press("Enter")
       async with ctx.typing():
         await page.type("#pb-widget-input-field", message)
         await page.keyboard.press("Enter")
-        time.sleep(0.5)
+        #time.sleep(0.5)
         thelist = await page.querySelectorAll(".pb-message > div > div")
         botresponse = await page.evaluate('(element) => element.textContent', thelist[len(thelist)-1])
-        # await page.waitForSelector("#snipTextIcon")
-        # botresponse = await page.evaluate('(element) => element.textContent', botelement)
+        while botresponse == message:
+          thelist = await page.querySelectorAll(".pb-message > div > div")
+          botresponse = await page.evaluate('(element) => element.textContent', thelist[len(thelist)-1])
         await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
