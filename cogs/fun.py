@@ -91,7 +91,7 @@ class Fun(commands.Cog):
       await ctx.send("Chat ready! Say something using >>tellbot")
     else:
       await ctx.send("You are already chatting with me!")
-  @commands.command()
+  @commands.command(aliases=['tb'])
   async def tellbot(self, ctx, *, message=None):
     if isChattingClever == True:
       async with ctx.typing():
