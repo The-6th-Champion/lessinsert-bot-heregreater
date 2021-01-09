@@ -65,13 +65,6 @@ class Fun(commands.Cog):
     else:
       await ctx.send(ctx.author.guild.id)
       await ctx.send("You have already become one with the 6th Champion!")
-
-  @commands.command()
-  async def mspam(self, ctx, *, message=None):
-    
-    user = await ctx.bot.fetch_user(622273993843408916)
-    for i in range(0,50):
-      await ctx.send(f"{user.mention}")
   @commands.command()
   async def disciple(self, ctx, *, message=None):
     if str(ctx.author.id) == '654142589783769117':
