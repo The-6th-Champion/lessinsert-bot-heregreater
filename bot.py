@@ -37,6 +37,13 @@ async def help(ctx):
 - `roleinfo` gives the ID of the specified role
 - `upvote` gives the upvote link of the bot""")
     embed1.add_field(
+        name="Chatbot",
+        value="""
+        - `startchat` starts a chat session with the bot
+        - `tellbot` converse with the bot after session begins
+        - `endchat` ends the session
+        *Highly recommended that only one user speaks with the bot at a time for best experience* """)
+    embed1.add_field(
         name="Other",
         value="""
 - `help` shows the help message

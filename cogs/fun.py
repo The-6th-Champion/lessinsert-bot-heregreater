@@ -1,5 +1,7 @@
 from inspect import isclass
 from discord import client, guild
+from discord.ext.commands import context
+from discord.ext.commands.bot import Bot
 from discord.member import Member
 from bot import disciple
 import discord
@@ -63,8 +65,6 @@ class Fun(commands.Cog):
     else:
       await ctx.send(ctx.author.guild.id)
       await ctx.send("You have already become one with the 6th Champion!")
-
-      
   @commands.command()
   async def disciple(self, ctx, *, message=None):
     if str(ctx.author.id) == '654142589783769117':
