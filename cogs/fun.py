@@ -104,7 +104,9 @@ class Fun(commands.Cog):
         while botresponse == message:
           thelist = await page.querySelectorAll(".pb-message > div > div")
           botresponse = await page.evaluate('(element) => element.textContent', thelist[len(thelist)-1])
-        if botresponse == "Try sending mail to Pandorabots (info@kuki.bot)":
+        if "https://www.kuki.ai/" in botresponse:
+          botresponse = botresponse.replace("https://www.kuki.ai/", "*!(#^%}{:^&)*@$>@)?$:#^^!")
+        elif botresponse == "Try sending mail to Pandorabots (info@kuki.bot)":
           botresponse = "Send messages for feedback to <#781315950099693619>"
         elif "kuki" in botresponse.lower():
           botresponse = botresponse.replace("Kuki", "<Insert bot here>")
@@ -122,7 +124,7 @@ class Fun(commands.Cog):
       await browser.close()
       await ctx.send("Chat ended")
     else:
-      await ctx.send("You haven't started a conversation with me. >>startchat to start one now!")
+      await ctx.send("You haven't started a conversation with me. `>>startchat` to start one now!")
 def setup(client):
   client.add_cog(Fun(client))
   print("fun is online")
