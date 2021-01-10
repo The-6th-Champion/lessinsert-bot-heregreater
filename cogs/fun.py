@@ -105,7 +105,7 @@ class Fun(commands.Cog):
           thelist = await page.querySelectorAll(".pb-message > div > div")
           botresponse = await page.evaluate('(element) => element.textContent', thelist[len(thelist)-1])
         if "https://www.kuki.ai/" in botresponse:
-          botresponse = botresponse.replace("https://www.kuki.ai/", "*!(#^%}{:^&)*@$>@)?$:#^^!")
+          botresponse = botresponse.replace("https://www.kuki.ai/", "<insert website here>")
         elif botresponse == "Try sending mail to Pandorabots (info@kuki.bot)":
           botresponse = "Send messages for feedback to <#781315950099693619>"
         elif "kuki" in botresponse.lower():
