@@ -373,7 +373,7 @@ async def ssay_error(error, ctx):
         raise error
 @help.command()
 @commands.check(is_it_me)
-async def sudosay():
+async def sudosay(ctx):
     em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
     await ctx.send(embed=em1)
 #client.run(TOKEN)
