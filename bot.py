@@ -343,13 +343,34 @@ async def credits(ctx):
 #      await message.channel.send("Hmmm?", embed=embed)
 
 
-@client.command(hidden=True, aliases=['ss'])
+
+@client.command(hidden=True)
 @commands.check(is_it_me)
-async def sudosay(ctx, channel: discord.TextChannel, *, message):
-    await ctx.send("Success!!")
-    await channel.send(message)
-
-
+async def sudosay(ctx,type,  location, *, content):
+    if type =="user":
+        try:
+          channel = client.get_user(int(location))
+        except:
+          raise commands.BadArgument
+    elif type =="channel":
+      try:
+          channel = client.get_channel(int(location))
+      except:
+          raise commands.BadArgument
+    await channel.send(content)
+    await ctx.send(f"Sent to {channel.name} successfully.")
+@sudosay.error
+async def ssay_error(error, ctx):
+    em = discord.embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
+    if isinstance(error, discord.errors.BadArgument): 
+        await ctx.send("honestly this is a BadArgument Error",embed=em)
+    elif isinstance(error, discord.errors.MissingPermissions): 
+        await ctx.send("This bot cannot send messages here.")
+    elif isinstance(error, discord.errors.NotFound): 
+        await ctx.send("Channel Not found!")
+    else:
+        await ctx.send(f"```\n{error}\n\nPlease try again and stuff.")
+        raise error
 #client.run(TOKEN)
 client.run("NzgwOTI4NzgxODU4MzczNjcy.X72Omg.cpqfuVDe6JcaAlYBcmqQFF-t_YM")
 # \t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages
