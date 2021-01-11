@@ -1,6 +1,7 @@
 from inspect import isclass
 from discord import client, guild
 from discord.ext.commands import context
+from discord.ext.commands import bot
 from discord.ext.commands.bot import Bot
 from discord.member import Member
 from bot import disciple
@@ -88,7 +89,7 @@ class Fun(commands.Cog):
       await page.goto("https://www.pandorabots.com/mitsuku/")
       await page.click("#pb-widget > div > div > div.pb-widget__description > div.pb-widget__description__chat-now > button")
       time.sleep(5)
-      await ctx.send("Chat ready! Say something using >>tellbot")
+      await ctx.send("Chat ready! Say something using `>>tellbot` or `>>tb`")
     else:
       await ctx.send("You are already chatting with me!")
   @commands.command(name = "tellbot", aliases=["tb"])
@@ -103,13 +104,17 @@ class Fun(commands.Cog):
         while botresponse == message:
           thelist = await page.querySelectorAll(".pb-message > div > div")
           botresponse = await page.evaluate('(element) => element.textContent', thelist[len(thelist)-1])
-        if "kuki" in botresponse.lower():
+        if "https://www.kuki.ai/" in botresponse:
+          botresponse = botresponse.replace("https://www.kuki.ai/", "<insert website here>")
+        elif botresponse == "Try sending mail to Pandorabots (info@kuki.bot)":
+          botresponse = "Send messages for feedback to <#781315950099693619>"
+        elif "kuki" in botresponse.lower():
           botresponse = botresponse.replace("Kuki", "<Insert bot here>")
         elif "pandorabots" in botresponse.lower():
           botresponse = botresponse.replace("Pandorabots", "The 6th Champion")
         await ctx.send(botresponse)
     else:
-      await ctx.send("Chat not active! Run >>startchat to get started and >>endchat to end the conversation!")
+      await ctx.send("Chat not active! Run `>>startchat` to get started and `>>endchat` to end the conversation!")
   @commands.command()
   async def endchat(self, ctx, *, message=None):
     global isChattingClever
@@ -119,7 +124,7 @@ class Fun(commands.Cog):
       await browser.close()
       await ctx.send("Chat ended")
     else:
-      await ctx.send("You haven't started a conversation with me. >>startchat to start one now!")
+      await ctx.send("You haven't started a conversation with me. `>>startchat` to start one now!")
 def setup(client):
   client.add_cog(Fun(client))
   print("fun is online")
