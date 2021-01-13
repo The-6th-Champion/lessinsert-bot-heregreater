@@ -8,27 +8,35 @@ class Utils(commands.Cog):
 
     #user info command: gives user id of a user
     @commands.command(aliases=["ui"])
-    async def userinfo(self, ctx, user: discord.User = None):
-        if user is None:
-            await ctx.send("Please provide a user to send info on!")
-            return
-        if user.bot == False:
+    async def userinfo(self, ctx, member: discord.Member = None):
+        pronounthing = "This user"
+        if member == None:
+            member = ctx.author
+            pronounthing = "You"
+        if member.bot == False:
             botcon = "No"
         else:
             botcon = "Yes"
 
         embed = discord.Embed(
             title='Userinfo',
-            description=f"Here is some Information on {user.name}",
+            description=f"Here is some Information on {member.name}",
             color=discord.Color.blue())
 
         embed.add_field(
-            name=user,
+            name=member,
             value=
-            f"- User's name: {user.name}\n- User's ID: {user.id}\n- User's Discriminator: {user.discriminator}\n- User is a Bot: {botcon}"
+            f"- User's name: {member.name}\n- User's ID: {member.id}\n- User's Discriminator: {member.discriminator}\n- User is a Bot: {botcon}"
+        )
+        joindate=member.joined_at.strftime("%c %Z")
+        createdate=member.created_at.strftime("%c %Z")
+        embed.add_field(
+            name="Dates",
+            value=
+            f"{pronounthing} **joined this server** on {joindate}\n{pronounthing} **joined discord** on {createdate}"
         )
 
-        embed.set_thumbnail(url=user.avatar_url)
+        embed.set_thumbnail(url=member.avatar_url)
         await ctx.send(embed=embed)
 
     #invite command. gives bot invite and invite to <ISH>
