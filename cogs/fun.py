@@ -76,7 +76,7 @@ class Fun(commands.Cog):
       await ctx.send("You are a verified disciple of the 6th Champion!")
     else:
       await ctx.send("You have not been verfied as a disciple of the 6th Champion")
-  @commands.command()
+  @commands.command(aliases=["sc"])
   async def startchat(self, ctx, *, message=None):
     global browser
     global page
@@ -115,7 +115,7 @@ class Fun(commands.Cog):
         await ctx.send(botresponse)
     else:
       await ctx.send("Chat not active! Run `>>startchat` to get started and `>>endchat` to end the conversation!")
-  @commands.command()
+  @commands.command(aliases=['ec'])
   async def endchat(self, ctx, *, message=None):
     global isChattingClever
     global browser
