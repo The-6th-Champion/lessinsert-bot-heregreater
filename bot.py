@@ -347,6 +347,10 @@ async def credits(ctx):
 @client.command(hidden=True)
 @commands.check(is_it_me)
 async def sudosay(ctx,type,  location, *, content):
+    location = location.replace("<", "")
+    location = location.replace(">", "")
+    location = location.replace("@!", "")
+    location = location.replace("#", "")
     if type =="user":
         try:
           channel = client.get_user(int(location))
@@ -365,11 +369,11 @@ async def ssay_error(error, ctx):
     if isinstance(error, discord.ext.commands.errors.BadArgument): 
         await ctx.send("honestly this is a BadArgument Error",embed=em1)
     elif isinstance(error, discord.ext.commands.errors.MissingPermissions): 
-        await ctx.send("This bot cannot send messages here.")
-    elif isinstance(error, discord.ext.commands.errors.NotFound): 
-        await ctx.send("Channel Not found!")
+        await ctx.send("This bot cannot send messages here.", embed = em1)
+    elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument, embed= em1): 
+        await ctx.send("are you missing something?")
     else:
-        await ctx.send(f"```\n{error}\n\nPlease try again and stuff.")
+        await ctx.send(f"```\n{error}\n\nPlease try again and stuff.", embed = em1)
         raise error
 @help.command()
 @commands.check(is_it_me)
