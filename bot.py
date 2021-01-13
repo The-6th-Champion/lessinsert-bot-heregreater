@@ -359,18 +359,18 @@ async def sudosay(ctx,type,  location, *, content):
           raise commands.BadArgument
     await channel.send(content)
     await ctx.send(f"Sent to {channel.name} successfully.")
-@sudosay.error
-async def ssay_error(error, ctx):
-    em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
-    if isinstance(error, discord.errors.BadArgument): 
-        await ctx.send("honestly this is a BadArgument Error",embed=em1)
-    elif isinstance(error, discord.errors.MissingPermissions): 
-        await ctx.send("This bot cannot send messages here.")
-    elif isinstance(error, discord.errors.NotFound): 
-        await ctx.send("Channel Not found!")
-    else:
-        await ctx.send(f"```\n{error}\n\nPlease try again and stuff.")
-        raise error
+#@sudosay.error
+#async def ssay_error(error, ctx):
+#    em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
+#    if isinstance(error, discord.errors.BadArgument): 
+#        await ctx.send("honestly this is a BadArgument Error",embed=em1)
+#    elif isinstance(error, discord.errors.MissingPermissions): 
+#        await ctx.send("This bot cannot send messages here.")
+#    elif isinstance(error, discord.errors.NotFound): 
+#        await ctx.send("Channel Not found!")
+#    else:
+#        await ctx.send(f"```\n{error}\n\nPlease try again and stuff.")
+#        raise error
 @help.command()
 @commands.check(is_it_me)
 async def sudosay(ctx):
