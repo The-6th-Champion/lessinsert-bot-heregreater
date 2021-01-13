@@ -352,15 +352,9 @@ async def sudosay(ctx,type,  location, *, content):
     location = location.replace("@!", "")
     location = location.replace("#", "")
     if type =="user":
-        try:
           channel = client.get_user(int(location))
-        except:
-          raise commands.BadArgument
     elif type =="channel":
-      try:
           channel = client.get_channel(int(location))
-      except:
-          raise commands.BadArgument
     await channel.send(content)
     await ctx.send(f"Sent to {channel.name} successfully.")
 @sudosay.error
