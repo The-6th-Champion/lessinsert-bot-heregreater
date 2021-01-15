@@ -2,8 +2,10 @@ import discord
 from discord.ext import commands
 import os
 import asyncio
-
-client = commands.Bot(command_prefix=commands.when_mentioned_or('>>'))
+intents = discord.Intents.default()
+intents.guilds = True
+intents.members = True
+client = commands.Bot(command_prefix=commands.when_mentioned_or('>>'), intents = intents)
 client.remove_command("help")
 #TOKEN = TOKEN = os.environ.get("TOKEN")
 
@@ -12,7 +14,11 @@ client.remove_command("help")
 def is_it_me(ctx):
     return ctx.author.id == 654142589783769117
 
-
+@client.event
+async def on_guild_join(guild):
+    channel = client.get_channel(792842806291988481)
+    embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by `{guild.owner.mention}`.\nIt's membercount is {guild.member_count}.")
+    await channel.send(embed=embed)
 #help command
 @client.group(name="help", invoke_without_command=True)
 async def help(ctx):
