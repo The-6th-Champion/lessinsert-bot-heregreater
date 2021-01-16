@@ -32,13 +32,12 @@ class Info(commands.Cog):
             description="This is a List of servers <IBH> is in")
         sl = self.client.guilds
         for x in range(len(sl)):
-            embed.add_field(name=sl[x], value="<===========>", inline=False)
+            embed.add_field(name=str(sl[x]), value="<===========>", inline=False)
         await ctx.send(embed=embed)
-    @commands.Cog.listener()
-    async def on_guild_join(self, guild:discord.Guild):
-      embed=discord.embed(title=f"<Insert Bot Here> Joined: `{guild.name}`", description=f"Id is {guild.id}")
-      channel = self.client.get_channel(792842806291988481)
-      await channel.send(embed =embed)
+    @serverlist.error
+    async def slerror(self, ctx, error):
+        if isinstance(error, discord.ext.commands.errors.CommandInvokeError):
+            await ctx.send("error?")
 
 def setup(client):
     client.add_cog(Info(client))
