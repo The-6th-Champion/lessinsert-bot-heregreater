@@ -17,7 +17,7 @@ def is_it_me(ctx):
 @client.event
 async def on_guild_join(guild):
     channel = client.get_channel(792842806291988481)
-    embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0x1ae7ff))
+    embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0x00ff00))
     await channel.send(embed=embed)
 @client.event
 async def on_guild_remove(guild):
