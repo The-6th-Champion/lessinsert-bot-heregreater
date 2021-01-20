@@ -273,7 +273,7 @@ async def disciple(ctx):
     await ctx.send(embed=em)
 
 # Cog stuff
-cogs = ['cogs.events', 'cogs.utils', 'cogs.moderation', 'cogs.fun', 'cogs.say', 'cogs.info']
+cogs = ['cogs.utils', 'cogs.moderation', 'cogs.fun', 'cogs.say', 'cogs.info'] #'cogs.events', 
 
 for cog in cogs:
     try:
