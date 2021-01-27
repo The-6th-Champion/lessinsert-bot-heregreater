@@ -7,7 +7,7 @@ intents.guilds = True
 intents.members = True
 client = commands.Bot(command_prefix=commands.when_mentioned_or('>>'), intents = intents)
 client.remove_command("help")
-#TOKEN = TOKEN = os.environ.get("TOKEN")
+TOKEN = TOKEN = os.environ.get("TOKEN")
 
 
 # make sure I am doing this
@@ -387,6 +387,6 @@ async def sudosay(ctx):
     em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
     await ctx.send(embed=em1)
 #client.run(TOKEN)
-client.run("NzgwOTI4NzgxODU4MzczNjcy.X72Omg.cpqfuVDe6JcaAlYBcmqQFF-t_YM")
+client.run("TOKEN")
 # \t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages
 #  \t- if you dont supply any number, the bot will just delete your command message
