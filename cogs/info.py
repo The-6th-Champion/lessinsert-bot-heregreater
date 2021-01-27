@@ -37,6 +37,7 @@ class Info(commands.Cog):
     @serverlist.error
     async def slerror(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.CommandInvokeError):
+            print(error)
             await ctx.send("error?")
 
 def setup(client):
