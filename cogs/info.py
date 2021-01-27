@@ -32,7 +32,7 @@ class Info(commands.Cog):
             description="This is a List of servers <IBH> is in")
         sl = self.client.guilds
         for x in range(len(sl)):
-            embed.add_field(name=x.name), value="<===========>", inline=False)
+            embed.add_field(name=x.name, value="<===========>", inline=False)
         await ctx.send(embed=embed)
     @serverlist.error
     async def slerror(self, ctx, error):
