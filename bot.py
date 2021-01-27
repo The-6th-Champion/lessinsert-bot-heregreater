@@ -73,6 +73,7 @@ async def help(ctx):
         - `sayinfo` Returns message from the creator! please look at this in your spare time.""",
           inline=False)
     embed1.set_thumbnail(url = client.user.avatar_url)
+    embed1.set_footer(text="Made by The 6th Champion")
     await ctx.send(embed=embed1)
 
 
