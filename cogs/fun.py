@@ -44,9 +44,12 @@ class Fun(commands.Cog):
   #say command: repeats arguments added
   @commands.command()
   async def say(self, ctx, *, message=None):
+      realmessage = ctx.message 
       if message == None:
           await ctx.send("Please Provide a message! ex `.say message`")
-      await ctx.send(message)
+      else:
+          await message.delete(realmessage)
+          await ctx.send(message)
   @commands.command()
   async def bowdown(self, ctx, *, message=None):
     if message == None:
