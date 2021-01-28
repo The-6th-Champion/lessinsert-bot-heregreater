@@ -48,7 +48,7 @@ class Fun(commands.Cog):
       if message == None:
           await ctx.send("Please Provide a message! ex `.say message`")
       else:
-          await message.delete(realmessage)
+          await realmessage.delete()
           await ctx.send(message)
   @commands.command()
   async def bowdown(self, ctx, *, message=None):
