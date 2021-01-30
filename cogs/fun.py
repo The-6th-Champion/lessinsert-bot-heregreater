@@ -38,8 +38,10 @@ class Fun(commands.Cog):
     self.client = client
   @commands.command(hidden = True, aliases = ["rickroll"])
   async def rr(self, ctx):
-    embed = discord.Embed(title="Wow!", description = "you found this!")
+    message = ctx.message
+    embed = discord.Embed(title="Wow!", description = "you found this!\nFind Waldo in this picture.")
     embed.set_image(url = "https://cdn.discordapp.com/attachments/455236204477022208/786274088247099433/wheres_waldo.png")
+    await message.delete()
     await ctx.send(embed = embed)
   #say command: repeats arguments added
   @commands.command()
