@@ -28,6 +28,7 @@ class Say(commands.Cog):
       bowdown = "bow down to the 6th champion!" in message1
       praisechamp = "praise the 6th champion!" in message1
       bowdownl = "bow down to link" in message1
+      ytea = "yorkshire tea" in message1
       if hello1 ==True and hello2 ==True:
         await message.channel.send(f"*General Kenobi*")
       elif hello1 ==True and hello2 != True:
@@ -49,6 +50,8 @@ class Say(commands.Cog):
         await message.channel.send(file=discord.File('./gifs/praisechampion.gif'))
       elif bowdownl ==True and link1 == True:
         await message.channel.send("smh no")
+      elif ytea == True:
+        await message.channel.send("Yorkshire Tea is amazing\n<:yorkshire_1:798737240313561128><:yorkshire_2:798737240502435851>\n<:yorkshire_3:798737240112889888><:yorkshire_4:798737240276598814>")
       pass
   @commands.command()
   async def sayinfo(self,ctx):
