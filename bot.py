@@ -388,7 +388,7 @@ async def sudosay(ctx):
     await ctx.send(embed=em1)
 
 
-#just for webhook testing -The 6th Champion
+#just for webhook testing 2.0-The 6th Champion
 #client.run(TOKEN)
 client.run(TOKEN)
 # \t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages
