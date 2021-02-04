@@ -386,6 +386,9 @@ async def ssay_error(error, ctx):
 async def sudosay(ctx):
     em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
     await ctx.send(embed=em1)
+
+
+#just for webhook testing -The 6th Champion
 #client.run(TOKEN)
 client.run(TOKEN)
 # \t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages
