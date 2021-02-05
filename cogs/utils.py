@@ -47,12 +47,12 @@ class Utils(commands.Cog):
         em = discord.Embed(title = f"Info about {ctx.guild.name}", description = f"This server's ID is {ctx.guild.id}", color = discord.Color.gold())
         em.add_field(name="Owner", value=f"{ctx.guild.owner.mention}")
         em.add_field(name="Member Count", value=f"{ctx.guild.member_count}", inline = True)
-        em.add_field(name="Boosting", value=f"{ctx.guild.premium_subscribers}\n{ctx.guild.premium_subscription_count}", inline = True)
+        em.add_field(name="Boosting", value=f"{ctx.guild.premium_subscription_count}", inline = True)
         em.add_field(name="Created On", value=f"{createdate}", inline = False)
         em.add_field(name="Channels", value=f"Text: {len(ctx.guild.text_channels)}\nVoice:{len(ctx.guild.voice_channels)}\nCategories:{len(ctx.guild.categories)}", inline = True)
-        em.add_field(name="Emojis", value=f"{len(ctx.guild.emojis)}", inline = False)
+        em.add_field(name="Emojis", value=f"{len(ctx.guild.emojis)}", inline = True)
         em.set_thumbnail(url = f"{ctx.guild.icon_url}")
-        em.set_footer(text=f"Requested By {ctx.author.mention}", icon_url=f"{ctx.author.default_avatar_url}")
+        em.set_footer(text=f"Requested By {ctx.author.name}#{ctx.author.discriminator}", icon_url=f"{ctx.author.avatar_url}")
         await ctx.send(embed=em)
         
  
