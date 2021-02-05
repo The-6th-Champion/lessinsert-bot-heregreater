@@ -50,7 +50,7 @@ class Utils(commands.Cog):
         em.add_field(name="Boosting", value=f"{ctx.guild.premium_subscribers}\n{ctx.guild.premium_subscription_count}", inline = True)
         em.add_field(name="Created On", value=f"{createdate}", inline = False)
         em.add_field(name="Channels", value=f"Text: {len(ctx.guild.text_channels)}\nVoice:{len(ctx.guild.voice_channels)}\nCategories:{len(ctx.guild.categories)}", inline = True)
-        em.add_field(name="Emojis", value=f"{ctx.guild.emojis}", inline = False)
+        em.add_field(name="Emojis", value=f"{len(ctx.guild.emojis)}", inline = False)
         em.set_thumbnail(url = f"{ctx.guild.icon_url}")
         em.set_footer(text=f"Requested By {ctx.author.mention}", icon_url=f"{ctx.author.default_avatar_url}")
         await ctx.send(embed=em)
