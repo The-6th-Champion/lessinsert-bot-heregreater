@@ -149,6 +149,16 @@ async def userinfo(ctx):
 
 
 @help.command()
+async def userinfo(ctx):
+    em = discord.Embed(
+        title="Serverinfo Command",
+        description=
+        "`>>serverinfo`\t Gives a lot of info about the Server.",
+        color=discord.Color(0x9ef))
+    await ctx.send(embed=em)
+
+
+@help.command()
 async def ping(ctx):
     em = discord.Embed(
         title="Ping Command",

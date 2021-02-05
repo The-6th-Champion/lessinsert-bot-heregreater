@@ -41,7 +41,7 @@ class Utils(commands.Cog):
     
 
     #serverinfo command: gives server info
-    @commands.command()
+    @commands.command(aliases=["si"])
     async def serverinfo(self, ctx):
         createdate=ctx.guild.created_at.strftime("%c %Z")
         em = discord.Embed(title = f"Info about {ctx.guild.name}", description = f"This server's ID is {ctx.guild.id}", color = discord.Color.gold())
