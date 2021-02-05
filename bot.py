@@ -149,7 +149,7 @@ async def userinfo(ctx):
 
 
 @help.command()
-async def userinfo(ctx):
+async def serverinfo(ctx):
     em = discord.Embed(
         title="Serverinfo Command",
         description=
