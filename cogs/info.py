@@ -34,11 +34,16 @@ class Info(commands.Cog):
         for x in range(len(sl)):
             embed.add_field(name=x.name, value="<===========>", inline=False)
         await ctx.send(embed=embed)
+    @commands.command()
+    async def secret(self,ctx):
+        await ctx.send("||Secretty secret|| :eyes: \n\n\n\n If you found this command, DM me @ ||[REDACTED]||#||null||")
+        #yahaha you found me
     @serverlist.error
     async def slerror(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.CommandInvokeError):
             print(error)
             await ctx.send("error?")
+    
 
 def setup(client):
     client.add_cog(Info(client))
