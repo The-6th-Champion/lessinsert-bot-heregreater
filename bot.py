@@ -24,6 +24,10 @@ json.dump(configvars, open('stuffs.json', 'w'))
 cred = credentials.Certificate('stuffs.json')
 default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
+def get_prefix(client, message): ##first we define get_prefix
+        doc_ref = db.collection('guild')
+        id = message.guild.id
+    return prefixes[str(doc_ref.id.prefix)] #recieve the prefix for the guild id given
 intents.guilds = True
 intents.members = True
 client = commands.Bot(command_prefix=commands.when_mentioned_or('>>'), intents = intents)
@@ -51,7 +55,7 @@ class MyHelpCommand(commands.MinimalHelpCommand):
         for page in self.paginator.pages:
             e.description += page
         await destination.send(embed=e)
-        
+
 client.help_command = MyHelpCommand()
 
 
