@@ -82,7 +82,7 @@ async def credits(ctx):
     await ctx.send(embed=em)
 
 #prefix command. gives bot prefix
-@commands.command(description="Returns the prefix of the bot. \nif you add an argument, it changes the bot's prefix.`BETA` (custom prefix doesnt work yet)")
+@client.command(description="Returns the prefix of the bot. \nif you add an argument, it changes the bot's prefix.`BETA` (custom prefix doesnt work yet)")
 async def prefix(self, ctx, prefix = None):
     embed1 = discord.Embed(
         title='Prefix',
