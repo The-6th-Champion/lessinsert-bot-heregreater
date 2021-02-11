@@ -33,7 +33,7 @@ cred = credentials.Certificate({
     "client_x509_cert_url": os.environ.get('client_x509_cert_url')
         })
 print(cred)
-default_app = firebase_admin.initialize_app(cred)
+#default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
 intents.guilds = True
 intents.members = True
