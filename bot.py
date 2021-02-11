@@ -9,6 +9,7 @@ import json
 
 
 configvars = {
+  "type": "service_account"
   "project_id": os.environ.get("project_id"),
   "private_key": os.environ.get("private_key"),
   "client_email": os.environ.get("client_email"),
