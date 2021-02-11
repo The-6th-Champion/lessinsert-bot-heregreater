@@ -6,3 +6,4 @@ dnspython==1.16.0
 pyrebase
 pyppeteer
 firebase_admin
+json
