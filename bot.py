@@ -2,6 +2,25 @@ import discord
 from discord.ext import commands
 import os
 import asyncio
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+
+
+
+configvars = {
+  "type": os.environ.get("type"),
+  "project_id": os.environ.get("project_id"),
+  "private_key_id": os.environ.get("private_key_id"),
+  "private_key": os.environ.get("private_key"),
+  "client_email": os.environ.get("client_email"),
+  "client_id": os.environ.get("client_id"),
+  "auth_uri": os.environ.get("auth_uri"),
+  "token_uri": os.environ.get("token_uri"),
+  "auth_provider_x509_cert_url": os.environ.get("auth_provider_x509_cert_url"),
+  "client_x509_cert_url": os.environ.get("client_x509_cert_url")
+}
+
 intents = discord.Intents.default()
 intents.guilds = True
 intents.members = True
@@ -9,279 +28,114 @@ client = commands.Bot(command_prefix=commands.when_mentioned_or('>>'), intents =
 client.remove_command("help")
 TOKEN = TOKEN = os.environ.get("TOKEN")
 
+default_app = firebase_admin.initialize_app(configvars)
+db = firestore.client()
+
+
+
 
 # make sure I am doing this
 def is_it_me(ctx):
     return ctx.author.id == 654142589783769117
 
-@client.event
-async def on_guild_join(guild):
-    channel = client.get_channel(792842806291988481)
-    embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0x00ff00))
-    await channel.send(embed=embed)
-@client.event
-async def on_guild_remove(guild):
-    channel = client.get_channel(792842806291988481)
-    embed = discord.Embed(title="Server Left <a:PensiveWobble:799822678386147388>", description=f"<Insert Bot Here> has left {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0xff0000))
-    await channel.send(embed=embed)
-#help command
-@client.group(name="help", invoke_without_command=True)
-async def help(ctx):
-    embed1 = discord.Embed(
-        title="Help",
-        description=
-        "Use `>>help [command]` for more info on each command.\n\n **Note: anything in `<>` is a necassary argument, anything in `[]` is optional**",
-        color=discord.Color(0x9ef))
-    embed1.add_field(
-        name="Moderation",
-        value="""
-- `kick` kicks user from server
-- `ban` bans user from server
-- `unban` unbans user from server
-- `clear` clears a certain amount of messages from the current channel""")
-    embed1.add_field(
-        name="Utility",
-        value="""
-- `invite` Gives invite link of bot and invite link of support server
-- `prefix` returns prefix, which is **`>>`**
-- `userinfo` returns info on on the specified user
-- `roleinfo` gives the ID of the specified role
-- `upvote` gives the upvote link of the bot""")
-    embed1.add_field(
-        name="Chatbot",
-        value="""
-        - `startchat` starts a chat session with the bot
-        - `tellbot` converse with the bot after session begins
-        - `endchat` ends the session
-        *Highly recommended that only one user speaks with the bot at a time for best experience* """, inline=False)
-    embed1.add_field(
-        name="Other",
-        value="""
-- `help` shows the help message
-- `ping` gives the latency of the bot""",
-        inline=True)
-    embed1.add_field(
-        name="Fun",
-        value="""
-- `say` returns ``<message>`` back to the chat. 
-- ||`bowdown`|| you'll see :eyes:
-- ||`disciple`|| you'll see :eyes:""")
-    embed1.add_field(
-        name="Important",
-        value=
-        """- `status` returns with message if bot is online. If it doesn't, It isnt online lol :)
-        - `sayinfo` Returns message from the creator! please look at this in your spare time.""",
-          inline=False)
-    embed1.set_thumbnail(url = client.user.avatar_url)
-    embed1.set_footer(text="Made by The 6th Champion")
-    await ctx.send(embed=embed1)
+
+# Help
+class MyHelpCommand(commands.MinimalHelpCommand):
+    async def send_pages(self):
+        destination = self.get_destination()
+        e = discord.Embed(color=discord.Color(0x9ef), description='')
+        for page in self.paginator.pages:
+            e.description += page
+        await destination.send(embed=e)
+        print("help")
+
+client.help_command = MyHelpCommand()
 
 
-@help.command()
-async def kick(ctx):
-    em = discord.Embed(
-        title="Kick Command",
-        description=
-        "`>>kick | k <user> [reason]`\t Kicks a user from the server.",
-        color=discord.Color(0x9ef))
-    em.add_field(name="Permissions", value="kick users is required")
-    await ctx.send(embed=em)
 
 
-@help.command()
-async def ban(ctx):
-    em = discord.Embed(
-        title="Ban Command",
-        description="`>>ban <user> [reason]`\t Bans a user from the server.",
-        color=discord.Color(0x9ef))
-    em.add_field(name="Permissions", value="ban users is required")
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def clear(ctx):
-    em = discord.Embed(
-        title="Clear Command",
-        description=
-        "`>>clear <number of messages>`\t clears a number of messages from the channel.\n\n\t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages\n\t- if you dont supply any number, the bot will just delete your command message",
-        color=discord.Color(0x9ef))
-    em.add_field(name="Permissions", value="manage messages is required")
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def unban(ctx):
-    em = discord.Embed(
-        title="Unban Command",
-        description="`>>unban <user#discrim>`\t unbans a user from the server.",
-        color=discord.Color(0x9ef))
-    em.add_field(name="Permissions", value="ban users is required")
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def invite(ctx):
-    em = discord.Embed(
-        title="Invite Command",
-        description=
-        "`>>invite`\t Gives the invite link of the bot, and the invite link of the support server.",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def prefix(ctx):
-    em = discord.Embed(
-        title="Prefix Command",
-        description="`>>prefix`\t Returns the prefix of the bot.",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def userinfo(ctx):
-    em = discord.Embed(
-        title="Userinfo Command",
-        description=
-        "`>>userinfo <user>`\t Gives the Name, discriminator, User ID, and if the specified user is a bot.",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def serverinfo(ctx):
-    em = discord.Embed(
-        title="Serverinfo Command",
-        description=
-        "`>>serverinfo`\t Gives a lot of info about the Server.",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
-
-
-@help.command()
+# Commands
+@client.command(aliases=["pong"],description="Returns the latency of the bot.")
 async def ping(ctx):
-    em = discord.Embed(
-        title="Ping Command",
-        description="`>>ping`\t Returns the latency of the bot.",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def say(ctx):
-    em = discord.Embed(
-        title="Say Command",
+    embed = discord.Embed(
+        title="PING",
         description=
-        "`>>say <messsage>`\t Says message back to you. \n\n- Please use this command according to your server rules.\n- This command is not meant to be used to target or hurt someone, so please do not use it for that.\n\n\tExample\n\t\t-  User: \>>say Hello\n\t\t-  Bot: Hello",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
+        f":ping_pong: Pong! The ping is **{round(client.latency *1000)}** milliseconds!",
+        color=0x00ff00)
+    await ctx.send(embed=embed)
 
-
-@help.command()
-async def roleinfo(ctx):
-    em = discord.Embed(
-        title="Roleinfo Command",
-        description=
-        "`>>roleinfo <role>`\t Gives the Role ID of the specified role.",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def status(ctx):
-    em = discord.Embed(
-        title="Status Command",
-        description=
-        "`>>status`\t If the bot is online, It will give a message. If it isn't, it will not say anything.",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
-
-
-@help.command()
-async def rr(ctx):
-    em = discord.Embed(
-        title="[REDACTED] **Hidden** Command :eyes:",
-        description="`>>[READCTED]`\t returns an image [REDACTED] lmao :)",
-        color=discord.Color(0x0f0))
-    await ctx.send(embed=em)
-
-
-@help.command()
+@client.command(hidden=True)
 async def credits(ctx):
     em = discord.Embed(
-        title="Credits **Hidden** Command :eyes:",
+        title="Credits",
         description=
-        "`>>credits`\t Gives the credits of the bot.\n\n If you are not on here, and you feel like you should be, go to the support server and contact The Creator...",
-        color=discord.Color(0x0f0))
+        "Creator/Owner: <insert name here>#XXXX\nProfile Picture: <insert name here>#XXXX\nBig helpers and contributers: ElectronDev and Fumseck of Zeldevs, Isukali"
+    )
+    em.set_footer(text = "If you found this command, have a cookie :cookie: lol. :)")
     await ctx.send(embed=em)
 
+#prefix command. gives bot prefix
+@commands.command(description="Returns the prefix of the bot. if you add an argument, it changes the bot's prefix.")
+async def prefix(self, ctx, prefix = None):
+    embed1 = discord.Embed(
+        title='Prefix',
+        description=f"This Bot's prefix is `>>`",
+        color=discord.Color.blue())
+    embed2 = discord.Embed(
+        title='Prefix',
+        description=f"This Bot's prefix has been changed to `{prefix}`",
+        color=discord.Color.green())
+    doc_ref = db.collection('guild').document(ctx.guild.id)
 
-@help.command(aliases=["mod"])
-async def moderation(ctx):
-    em = discord.Embed(
-        title="Moderation Command Group",
-        description="`>>kick`\n`>>ban`\n`>>clear`\n`>>unban`",
-        color=discord.Color(0x0f0))
-    await ctx.send(embed=em)
+    if prefix == None:
+        
+        await ctx.send(embed=embed1)
+    else:
+        try:
+            doc_ref.create({
+                'prefix': prefix
+            })
+        except Conflict:
+            doc_ref.update({
+                'prefix': prefix
+            })
+        await ctx.send(embed=embed2)
 
+@client.command(hidden=True)
+@commands.check(is_it_me)
+async def sudosay(ctx,type,  location, *, content):
+    location = location.replace("<", "")
+    location = location.replace(">", "")
+    location = location.replace("@!", "")
+    location = location.replace("#", "")
+    if type =="user":
+          channel = client.get_user(int(location))
+    elif type =="channel":
+          channel = client.get_channel(int(location))
+    await channel.send(content)
+    await ctx.send(f"Sent to {channel.name} successfully.")
 
-@help.command(aliases=["util"])
-async def utility(ctx):
-    em = discord.Embed(
-        title="Utility Command Group",
-        description="`>>userinfo`\n`>>invite`\n`>>prefix`\n`>>roleinfo`",
-        color=discord.Color(0x0f0))
-    await ctx.send(embed=em)
-
+@sudosay.error
+async def ssay_error(error, ctx):
+    em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
+    if isinstance(error, discord.ext.commands.errors.BadArgument): 
+        await ctx.send("honestly this is a BadArgument Error",embed=em1)
+    elif isinstance(error, discord.ext.commands.errors.MissingPermissions): 
+        await ctx.send("This bot cannot send messages here.", embed = em1)
+    elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument, embed= em1): 
+        await ctx.send("are you missing something?")
+    else:
+        await ctx.send(f"```\n{error}\n\nPlease try again and stuff.", embed = em1)
+        raise error
 
 @help.command()
-async def fun(ctx):
-    em = discord.Embed(
-        title="FunCommand Group",
-        description="`>>say`\n`>>[REDACTED due to being hidden]`",
-        color=discord.Color(0x0f0))
-    await ctx.send(embed=em)
+@commands.check(is_it_me)
+async def sudosay(ctx):
+    em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
+    await ctx.send(embed=em1)
 
 
-@help.command()
-async def other(ctx):
-    em = discord.Embed(
-        title="Moderation Command Group",
-        description="`>>help`\n`>>status`\n`ping`",
-        color=discord.Color(0x0f0))
-    await ctx.send(embed=em)
 
-
-@help.command()
-async def upvote(ctx):
-    em = discord.Embed(
-        title="Upvote Command",
-        description="`>>upvote` Gives the link to upvote the Bot",
-        color=discord.Color(0x0f0))
-    await ctx.send(embed=em)
-
-@help.command()
-async def sayinfo(ctx):
-  em = discord.Embed(title="Say Info Message", description="`>>sayinfo` message from the Creator about the bots chatting ability")
-  await ctx.send(embed=em)
-
-@help.command()
-async def bowdown(ctx):
-    em = discord.Embed(
-        title="bowdown Command",
-        description=
-        "``>>bowdown <verify phrase>``\t This is a command that will add you to the 6th champion disciple club. You can check your status with the `disciple` command. This is for fun, I do not mean to offend any religious beliefs. Have fun, and join the club!",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
-
-@help.command()
-async def disciple(ctx):
-    em = discord.Embed(
-        title="disciple Command",
-        description=
-        "`>>disciple`\t This is a way to check if you are a follower of the 6th champion. dont worry this is a joke command, allong with `bowdown` and I do not mean to offend any religious beliefs. Have fun, and join the club!",
-        color=discord.Color(0x9ef))
-    await ctx.send(embed=em)
 
 # Cog stuff
 cogs = ['cogs.utils', 'cogs.moderation', 'cogs.fun', 'cogs.say', 'cogs.info'] #'cogs.events', 
@@ -337,69 +191,5 @@ async def unloadcog(ctx, cogname=None, hidden=True):
         await ctx.send(f"{cog} is offline.")
 
 
-# ping commnd: ping, response time ig
-@client.command(aliases=["pong"])
-async def ping(ctx):
-    embed = discord.Embed(
-        title="PING",
-        description=
-        f":ping_pong: Pong! The ping is **{round(client.latency *1000)}** milliseconds!",
-        color=0x00ff00)
-    await ctx.send(embed=embed)
-
-
-@client.command(hidden=True)
-async def credits(ctx):
-    em = discord.Embed(
-        title="Credits",
-        description=
-        "Creator/Owner: <insert name here>#XXXX\nProfile Picture: <insert name here>#XXXX\nBig helpers and contributers: ElectronDev and Fumseck of Zeldevs, Isukali"
-    )
-    em.set_footer(text = "If you found this command, have a cookie :cookie: lol. :)")
-    await ctx.send(embed=em)
-
-#@client.event
-#async def on_message(message):
-#  embed = discord.Embed(title = 'Prefix', description = f"This Bot's prefix is #`>>`", color = discord.Color.blue())
-#  if client.user.mentioned_in(message):
-#      await message.channel.send("Hmmm?", embed=embed)
-
-
-
-@client.command(hidden=True)
-@commands.check(is_it_me)
-async def sudosay(ctx,type,  location, *, content):
-    location = location.replace("<", "")
-    location = location.replace(">", "")
-    location = location.replace("@!", "")
-    location = location.replace("#", "")
-    if type =="user":
-          channel = client.get_user(int(location))
-    elif type =="channel":
-          channel = client.get_channel(int(location))
-    await channel.send(content)
-    await ctx.send(f"Sent to {channel.name} successfully.")
-@sudosay.error
-async def ssay_error(error, ctx):
-    em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
-    if isinstance(error, discord.ext.commands.errors.BadArgument): 
-        await ctx.send("honestly this is a BadArgument Error",embed=em1)
-    elif isinstance(error, discord.ext.commands.errors.MissingPermissions): 
-        await ctx.send("This bot cannot send messages here.", embed = em1)
-    elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument, embed= em1): 
-        await ctx.send("are you missing something?")
-    else:
-        await ctx.send(f"```\n{error}\n\nPlease try again and stuff.", embed = em1)
-        raise error
-@help.command()
-@commands.check(is_it_me)
-async def sudosay(ctx):
-    em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
-    await ctx.send(embed=em1)
-
-
-#just for webhook testing 2.0-The 6th Champion
-#client.run(TOKEN)
+        
 client.run(TOKEN)
-# \t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages
-#  \t- if you dont supply any number, the bot will just delete your command message

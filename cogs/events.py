@@ -6,15 +6,16 @@ class Events(commands.Cog):
   def __init__(self,client):
 
     self.client = client
-  @commands.Cog.listener()
-  async def on_member_join(self, member):
-    print("joineddddd")
-    channel=client.get_channel(764927803396718622)
-    await channel.send(str(member) + "has joined <Insert Server Here>! Welcome")
-  @commands.Cog.listener()
-  async def on_member_remove(self, member):
-    channel=client.get_channel(764927803396718622)
-    await channel.send(str(member) + "has left <Insert Server Here>! :sob: We will miss you....")
+  @client.event
+  async def on_guild_join(self, guild):
+    channel = self.client.get_channel(792842806291988481)
+    embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0x00ff00))
+    await channel.send(embed=embed)
+  @client.event
+  async def on_guild_remove(self, guild):
+    channel = self.client.get_channel(792842806291988481)
+    embed = discord.Embed(title="Server Left <a:PensiveWobble:799822678386147388>", description=f"<Insert Bot Here> has left {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0xff0000))
+    await channel.send(embed=embed)
 
 def setup(client):
   client.add_cog(Events(client))

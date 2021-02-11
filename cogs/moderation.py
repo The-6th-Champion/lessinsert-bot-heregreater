@@ -8,7 +8,7 @@ class Moderation(commands.Cog):
 
 
   #kick command: kicks user
-  @commands.command(aliases = ["k"])
+  @commands.command(aliases = ["k"], description="Kicks a user from the server.")
   @commands.has_permissions(kick_members=True)
   async def kick(self, ctx, member: discord.Member, *, reason = None):
     #embed for server
@@ -40,7 +40,7 @@ class Moderation(commands.Cog):
 
 
     #ban command: bans user
-  @commands.command(aliases = ["b"])
+  @commands.command(aliases = ["b"], description="Bans a user from the server.")
   @commands.has_permissions(ban_members=True)
   async def ban(self, ctx, member: discord.Member, *, reason = None):
     #embed for server
@@ -71,7 +71,7 @@ class Moderation(commands.Cog):
 
 
   #unban command: unbans someone who is Banned
-  @commands.command(aliases = ["ub"])
+  @commands.command(aliases = ["ub"], description="unbans a user from the server.")
   @commands.has_permissions(ban_members=True)
   async def unban(self, ctx, *, member):
     banned_users = await ctx.guild.bans()
@@ -91,7 +91,7 @@ class Moderation(commands.Cog):
         return
 
   #clear command: clears channel messages
-  @commands.command(aliases = ["cl"])
+  @commands.command(aliases = ["cl"], description = "clears a number of messages from the channel.\n\n\t- it deletes `<number of messages>` and the command message automatically, so don't be alarmed if the success message says it deleted one too many messages\n\t- if you dont supply any number, the bot will just delete your command message")
   @commands.has_permissions(manage_messages=True)
   async def clear(self, ctx, *, amount = 0):
     amount = amount

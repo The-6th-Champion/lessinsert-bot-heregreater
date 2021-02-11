@@ -45,6 +45,7 @@ class Say(commands.Cog):
         #await message.channel.send("I am pretty good, hbu?")
       #elif hbu ==True or hbu2==True:
         #await message.channel.send("I am pretty good.")
+      #things have been commented out to decrease annoying ness
       elif bowdown == True or praisechamp == True:
         await message.channel.send("It must be done!")
         await message.channel.send(file=discord.File('./gifs/praisechampion.gif'))
@@ -54,13 +55,10 @@ class Say(commands.Cog):
         await message.channel.send("Yorkshire Tea is amazing")
         await message.channel.send("<:yorkshire_1:798737240313561128><:yorkshire_2:798737240502435851>\n<:yorkshire_3:798737240112889888><:yorkshire_4:798737240276598814>")
       pass
-  @commands.command()
+  @commands.command(description="message from the Creator about the bots chatting ability")
   async def sayinfo(self,ctx):
     await ctx.send("Please do not be under the impression that this bot was made to offend. The chatting it does is merely for fun. please do not be offended by its replies, and if you do want something removed or changed, join the support server by doing `>>invite` and tell me through DMs or through <#781315950099693619>.\n-The Creator\n<insert name here>#4318")
-  #@on_message.error
-  #async def sayy_error(self, ctx, error, guild :discord.Guild):
-    #if isinstance(error, discord.errors.Forbidden): 
-        #print(f"I have no perms here{guild.name}")
+
 
 def setup(client):
   client.add_cog(Say(client))
