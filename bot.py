@@ -20,7 +20,7 @@ configvars = {
     "client_x509_cert_url": os.environ.get("client_x509_cert_url")
 }
 
- cred = credentials.Certificate({
+cred = credentials.Certificate({
               "type": "service_account",
               "project_id": os.environ.get('project_id'),
               "private_key_id": os.environ.get('private_key_id'),
