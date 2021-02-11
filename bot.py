@@ -98,14 +98,9 @@ async def prefix(ctx, prefix = None):
         
         await ctx.send(embed=embed1)
     else:
-        try:
-            doc_ref.create({
-                'prefix': prefix
-            })
-        except Conflict:
-            doc_ref.update({
-                'prefix': prefix
-            })
+        doc_ref.set({
+            'prefix': prefix
+        }, merge = True)
         await ctx.send(embed=embed2)
 
 @client.command(hidden=True)
