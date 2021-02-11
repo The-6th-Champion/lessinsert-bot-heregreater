@@ -25,8 +25,8 @@ cred = credentials.Certificate('stuffs.json')
 default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
 def get_prefix(client, message): ##first we define get_prefix
-        doc_ref = db.collection('guild')
-        id = message.guild.id
+    doc_ref = db.collection('guild')
+    id = message.guild.id
     return prefixes[str(doc_ref.id.prefix)] #recieve the prefix for the guild id given
 intents.guilds = True
 intents.members = True
