@@ -92,7 +92,7 @@ async def prefix(ctx, prefix = None):
         title='Prefix',
         description=f"This Bot's prefix has been changed to `{prefix}`",
         color=discord.Color.green())
-    doc_ref = db.collection('guild').document(ctx.guild.id)
+    doc_ref = db.collection('guild').document(str(ctx.guild.id))
 
     if prefix == None:
         
