@@ -19,8 +19,7 @@ configvars = {
     "auth_provider_x509_cert_url": os.environ.get("auth_provider_x509_cert_url"),
     "client_x509_cert_url": os.environ.get("client_x509_cert_url")
 }
-
-cred = credentials.Certificate({
+print({
     "type": "service_account",
     "project_id": os.environ.get('project_id'),
     "private_key_id": os.environ.get('private_key_id'),
@@ -32,8 +31,7 @@ cred = credentials.Certificate({
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url": os.environ.get('client_x509_cert_url')
         })
-print(cred)
-#default_app = firebase_admin.initialize_app(cred)
+default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
 intents.guilds = True
 intents.members = True
