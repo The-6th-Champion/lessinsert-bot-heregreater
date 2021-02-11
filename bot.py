@@ -36,7 +36,7 @@ def get_prefix(client, message): ##first we define get_prefix
     return prefixes[str(doc_ref.id.prefix)] #recieve the prefix for the guild id given
 intents.guilds = True
 intents.members = True
-client = commands.Bot(command_prefix=commands.when_mentioned_or_function(get_prefix), intents = intents)
+client = commands.Bot(command_prefix=when_mentioned_or_function(get_prefix), intents = intents)
 client.remove_command("help")
 TOKEN = TOKEN = os.environ.get("TOKEN")
 
