@@ -24,6 +24,7 @@ json.dump(configvars, open('stuffs.json', 'w'))
 cred = credentials.Certificate('stuffs.json')
 default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
+db = firestore.client()
 
 doc_ref = db.collection("guilds").doc(str(msg.guild.id))
 data = doc_ref.get().to_dict()
@@ -38,7 +39,6 @@ TOKEN = TOKEN = os.environ.get("TOKEN")
 
 #cred = credentials.Certificate('stuffs.json')
 #default_app = firebase_admin.initialize_app(cred)
-db = firestore.client()
 
 #work?
 
