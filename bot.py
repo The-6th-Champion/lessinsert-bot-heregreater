@@ -24,13 +24,19 @@ json.dump(configvars, open('stuffs.json', 'w'))
 cred = credentials.Certificate('stuffs.json')
 default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
+def when_mentioned_or_function(func):
+    def inner(bot, message):
+        r = func(bot, message)
+        r = commands.when_mentioned(bot, msg) + r
+        return r
+    return inner
 def get_prefix(client, message): ##first we define get_prefix
     doc_ref = db.collection('guild')
     id = message.guild.id
     return prefixes[str(doc_ref.id.prefix)] #recieve the prefix for the guild id given
 intents.guilds = True
 intents.members = True
-client = commands.Bot(command_prefix=commands.when_mentioned_or(get_prefix(client, message)), intents = intents)
+client = commands.Bot(command_prefix=commands.when_mentioned_or_function(get_prefix), intents = intents)
 client.remove_command("help")
 TOKEN = TOKEN = os.environ.get("TOKEN")
 
