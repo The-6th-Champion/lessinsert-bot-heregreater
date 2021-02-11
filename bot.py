@@ -27,7 +27,8 @@ intents.members = True
 client = commands.Bot(command_prefix=commands.when_mentioned_or('>>'), intents = intents)
 client.remove_command("help")
 TOKEN = TOKEN = os.environ.get("TOKEN")
-cred = credentials.Certificate(json.dumps(configvars))
+json.dump(configvars, open('stuffs.json', 'w'))
+cred = credentials.Certificate('stuffs.json')
 default_app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
