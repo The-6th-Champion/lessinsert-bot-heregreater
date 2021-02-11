@@ -7,26 +7,11 @@ from discord.member import Member
 from bot import disciple
 import discord
 from discord.ext import commands
-import pyrebase
 import firebase_admin
 from pyppeteer import launch
 import asyncio
 import time
 
-config = {
-    "apiKey": "AIzaSyCWPSVy-1jPpSup_mNm2wNzzyzwnM4tn6M",
-    "authDomain": "less-insert-bot-here-greater.firebaseapp.com",
-    "databaseURL": "https://less-insert-bot-here-greater-default-rtdb.firebaseio.com",
-    "projectId": "less-insert-bot-here-greater",
-    "storageBucket": "less-insert-bot-here-greater.appspot.com",
-    "messagingSenderId": "328700534390",
-    "appId": "1:328700534390:web:f2b11d24e439f924098957",
-    "measurementId": "G-79TMJX9X3G"
-}
-#firebase = firebase.FirebaseApplication("https://less-insert-bot-here-greater-default-rtdb.firebaseio.com/")
-
-firebase = pyrebase.initialize_app(config)
-db=firebase.database()
 dbids = db.get()
 ids = []
 for i in dbids.each():
