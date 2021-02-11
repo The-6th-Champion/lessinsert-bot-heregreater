@@ -143,11 +143,6 @@ async def ssay_error(error, ctx):
         await ctx.send(f"```\n{error}\n\nPlease try again and stuff.", embed = em1)
         raise error
 
-@help.command()
-@commands.check(is_it_me)
-async def sudosay(ctx):
-    em1 = discord.Embed(title = "Sudosay Command", description="`>>sudosay <channel | user> <id of user/channel> <content>", color = discord.Color(0xf00))
-    await ctx.send(embed=em1)
 
 
 
