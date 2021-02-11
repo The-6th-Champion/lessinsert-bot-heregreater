@@ -1,7 +1,7 @@
 import discord
 import asyncio
 from discord.ext import commands
-import firestore_admin
+import firebase_admin
 
 class Say(commands.Cog):
 
