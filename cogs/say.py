@@ -8,7 +8,7 @@ class Say(commands.Cog):
   def __init__(self,client):
 
     self.client = client
-  db = firestore_admin.firestore.Client()
+  db = firebase_admin.firestore.Client()
 
   @commands.command(name = "nosay", description = "This can toggle the auto-responses that are triggered from certain phrases like\n \'why\' and \'why not\'\n and\n \'Hello\' and \'Hi <name>")
   @commands.has_permissions(administrator = True)
