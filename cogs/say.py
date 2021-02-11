@@ -10,7 +10,7 @@ class Say(commands.Cog):
     self.client = client
   db = firestore_admin.firestore.Client()
 
-  @commands.command(name = "nosay" description = "This can toggle the auto-responses that are triggered from certain phrases like\n \'why\' and \'why not\'\n and\n \'Hello\' and \'Hi <name>")
+  @commands.command(name = "nosay", description = "This can toggle the auto-responses that are triggered from certain phrases like\n \'why\' and \'why not\'\n and\n \'Hello\' and \'Hi <name>")
   @commands.has_permissions(administrator = True)
   async def nosay(self, ctx):
     ref = db.collection("guilds").doc(message.guild.id)
