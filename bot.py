@@ -32,7 +32,7 @@ cred = credentials.Certificate(configvars)
 default_app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-
+#work?
 
 
 # make sure I am doing this
