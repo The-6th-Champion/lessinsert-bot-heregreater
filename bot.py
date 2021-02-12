@@ -39,7 +39,7 @@ def get_prefix(client, message : discord.Message): ##first we define get_prefix
 
 intents.guilds = True
 intents.members = True
-client = commands.Bot(command_prefix=when_mentioned_or(get_prefix), intents = intents, case_insensitive = True)
+client = commands.Bot(command_prefix=commands.when_mentioned_or(get_prefix), intents = intents, case_insensitive = True)
 client.remove_command("help")
 TOKEN = TOKEN = os.environ.get("TOKEN")
 
