@@ -39,15 +39,9 @@ def get_prefix(client, message : discord.Message): ##first we define get_prefix
 
 intents.guilds = True
 intents.members = True
-client = commands.Bot(command_prefix=commands.when_mentioned_or(get_prefix), intents = intents, case_insensitive = True)
+client = commands.Bot(command_prefix=(get_prefix), intents = intents, case_insensitive = True)
 client.remove_command("help")
 TOKEN = TOKEN = os.environ.get("TOKEN")
-
-
-#cred = credentials.Certificate('stuffs.json')
-#default_app = firebase_admin.initialize_app(cred)
-
-#work?
 
 
 # make sure I am doing this
@@ -142,10 +136,7 @@ async def ssay_error(error, ctx):
         await ctx.send(f"```\n{error}\n\nPlease try again and stuff.", embed = em1)
         raise error
 
-#prefix reset for all servers.....danger :)
-@client.command()
-@commands.check(is_it_me)
-async def mememe(ctx):
+
     for guild in client.guilds:
         doc_ref = db.collection("guild").document(str(guild.id))
         doc_ref.set({
@@ -179,7 +170,7 @@ async def on_guild_remove(guild):
 @client.command(name = "togglesay", description = "This can toggle the auto-responses that are triggered from certain phrases like\n \'why\' and \'why not\'\n and\n \'Hello\' and \'Hi <name>")
 @commands.has_permissions(administrator = True)
 async def togglesay(ctx):
-    ref = db.collection("guild").document(str(message.guild.id))
+    ref = db.collection("guild").document(str(ctx.guild.id))
     doc = ref.get()
     data = doc.to_dict()
     if data["toggle_say"] == True:
