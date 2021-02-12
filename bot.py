@@ -235,7 +235,7 @@ async def on_message(message):
             elif howru ==True or howru2==True:
                 await message.channel.send("I am pretty good, hbu?")
             elif hbu ==True or hbu2==True:
-                await message.channel.send("I am pretty good.")=
+                await message.channel.send("I am pretty good.")
             elif bowdown == True or praisechamp == True:
                 await message.channel.send("It must be done!")
                 await message.channel.send(file=discord.File('./gifs/praisechampion.gif'))
