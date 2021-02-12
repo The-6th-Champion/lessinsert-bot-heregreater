@@ -26,11 +26,11 @@ default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
 db = firestore.client()
 def get_prefix(client, message : discord.Message): ##first we define get_prefix
-    doc_ref = db.collection("guilds").document(str(message.guild.id))
+    doc_ref = db.collection("guild").document(str(message.guild.id))
     doc = doc_ref.get()
     data = doc.to_dict()
     print(data)
-    if data["prefix"]==None:
+    if data["prefix"] == None:
         doc_ref.set({
             "prefix" : ">>"
         })
