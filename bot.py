@@ -26,7 +26,7 @@ default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
 db = firestore.client()
 
-doc_ref = db.collection("guilds").doc(str(msg.guild.id))
+doc_ref = db.collection("guilds").document(str(msg.guild.id))
 data = doc_ref.get().to_dict()
 # now you have data.prefix as the prefix
 
