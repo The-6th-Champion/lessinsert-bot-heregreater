@@ -70,7 +70,7 @@ client.help_command = MyHelpCommand()
 
 
 # Commands
-@client.command(aliases=["pong"],description="Returns the latency of the bot.")
+@client.command(name = "ping" aliases=["pong"],description="Returns the latency of the bot.")
 async def ping(ctx):
     embed = discord.Embed(
         title="PING",
@@ -90,12 +90,17 @@ async def credits(ctx):
     await ctx.send(embed=em)
 
 #prefix command. gives bot prefix
-@client.command(description="Returns the prefix of the bot. \nif you add an argument, it changes the bot's prefix.`BETA` (custom prefix doesnt work yet)")
-async def prefix(ctx, prefix = None):
+@client.command(name = "prefix", description="Returns the prefix of the bot. \nif you add an argument, it changes the bot's prefix.`BETA` (custom prefix doesnt work yet)")
+async def prefix(ctx):
     embed1 = discord.Embed(
         title='Prefix',
         description=f"This Bot's prefix is `>>`",
         color=discord.Color.blue())
+
+#change prefix
+@client.command(name = "setprefix", description="changes prefix. You need Admin Permission")
+@commands.has_permissions(administrator = True)
+async def setprefix(ctx, prefix = None):
     embed2 = discord.Embed(
         title='Prefix',
         description=f"This Bot's prefix has been changed to `{prefix}`",
@@ -103,8 +108,7 @@ async def prefix(ctx, prefix = None):
     doc_ref = db.collection('guild').document(str(ctx.guild.id))
 
     if prefix == None:
-        
-        await ctx.send(embed=embed1)
+        await ctx.send("Please provide a prefix")
     else:
         doc_ref.set({
             'prefix': prefix
@@ -138,6 +142,7 @@ async def ssay_error(error, ctx):
         await ctx.send(f"```\n{error}\n\nPlease try again and stuff.", embed = em1)
         raise error
 
+#prefix reset for all servers.....danger :)
 @client.command()
 @commands.check(is_it_me)
 async def mememe(ctx):
@@ -150,22 +155,104 @@ async def mememe(ctx):
     await ctx.send("done?")
             
 @client.event
-async def on_guild_join(self, guild):
+async def on_guild_join(guild):
     doc_ref = db.collection("guild").document(str(guild.id))
     doc_ref.set({
             "prefix" : ">>",
             "toggle_say" : True
         }, merge = True)
-    channel = self.client.get_channel(792842806291988481)
+    channel = client.get_channel(792842806291988481)
     embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0x00ff00))
     await channel.send(embed=embed)
 @client.event
-async def on_guild_remove(self, guild):
-    channel = self.client.get_channel(792842806291988481)
+async def on_guild_remove(guild):
+    channel = client.get_channel(792842806291988481)
     embed = discord.Embed(title="Server Left <a:PensiveWobble:799822678386147388>", description=f"<Insert Bot Here> has left {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0xff0000))
     await channel.send(embed=embed)
+
+
+
+#Say
+#
+#
+
+@client.command(name = "togglesay", description = "This can toggle the auto-responses that are triggered from certain phrases like\n \'why\' and \'why not\'\n and\n \'Hello\' and \'Hi <name>")
+@commands.has_permissions(administrator = True)
+async def togglesay(ctx):
+ref = db.collection("guilds").doc(message.guild.id)
+doc = ref.get()
+data = doc.to_dict()
+if data.toggle_say == True:
+    doc.set({
+    "toggle_say" : False
+    }, merge = True)
+    await ctx.send("The say function is now disabled")
+elif data.toggle_say == False:
+    doc.set({
+    "toggle_say" : True
+    }, merge = True)
+    await ctx.send("The say function is now enabled")
+
+@client.event()
+async def on_message(message):
+ref = db.collection("guilds").doc(message.guild.id)
+doc = ref.get()
+data = doc.to_dict()
+if data.toggle_say == True:
+    #send message
+    if message.author == client.user:
+        pass
+    elif message.author != client.user:
+    message1 = message.content
+    message1 = message1.lower()
+    #await message.channel.send(message1)
+    hello1 = "hello" in message1
+    hello2 = "hello there" in message1
+    e1 = "é" in message1
+    inh1 = "<insert name here>" in message1
+    link1="link" in message1
+    why = "why" in message1
+    howru = "how are you" in message1
+    howru2 = "hru" in message1
+    hbu = "hbu" in message1
+    hbu2 = "how about you" in message1
+    bowdown = "bow down to the 6th champion!" in message1
+    praisechamp = "praise the 6th champion!" in message1
+    bowdownl = "bow down to link" in message1
+    ytea = "yorkshire tea" in message1
+    if hello1 ==True and hello2 ==True:
+        await message.channel.send(f"*General Kenobi*")
+    elif hello1 ==True and hello2 != True:
+        await message.channel.send(f"Hi {message.author.name}")
+    elif e1 == True and message.author != 780928781858373672:
+        await message.channel.send(f"é")
+    elif inh1 ==True:
+        await message.channel.send("<insert name here> is __**The Creator**__. He is also known as The 6th Champion, Da6thChamp,  and <The 6th Champion>. He developed me, and also has a support server. He is amazing. Bow down to him :person_bowing:!!!")
+    elif why == True:
+        await message.channel.send("why not?")
+    elif link1 ==True and bowdownl ==False:
+        await message.channel.send("The hero of hyrule. He is resurrected a lot.")
+    elif howru ==True or howru2==True:
+        await message.channel.send("I am pretty good, hbu?")
+    elif hbu ==True or hbu2==True:
+        await message.channel.send("I am pretty good.")=
+    elif bowdown == True or praisechamp == True:
+        await message.channel.send("It must be done!")
+        await message.channel.send(file=discord.File('./gifs/praisechampion.gif'))
+    elif bowdownl ==True and link1 == True:
+        await message.channel.send("smh no")
+    elif ytea == True:
+        await message.channel.send("Yorkshire Tea is amazing")
+        await message.channel.send("<:yorkshire_1:798737240313561128><:yorkshire_2:798737240502435851>\n<:yorkshire_3:798737240112889888><:yorkshire_4:798737240276598814>")
+else:
+    pass
+@client.command(description="message from the Creator about the bots chatting ability")
+async def sayinfo(ctx):
+await ctx.send("Please do not be under the impression that this bot was made to offend. The chatting it does is merely for fun. please do not be offended by its replies, and if you do want something removed or changed, join the support server by doing `>>invite` and tell me through DMs or through <#781315950099693619>.\n-The Creator\n<insert name here>#4318")
+
+
 # Cog stuff
-cogs = ['cogs.utils', 'cogs.moderation', 'cogs.fun', 'cogs.say', 'cogs.info'] #'cogs.events', 
+cogs = ['cogs.utils', 'cogs.moderation', 'cogs.fun',  'cogs.info'] #'cogs.events', 'cogs.say',
 
 for cog in cogs:
     try:
