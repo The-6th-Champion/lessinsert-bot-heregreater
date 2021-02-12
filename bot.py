@@ -198,7 +198,7 @@ async def on_message(message):
     ref = db.collection("guild").document(str(message.guild.id))
     doc = ref.get()
     data = doc.to_dict()
-    if data{"toggle_say"} == True:
+    if data["toggle_say"] == True:
         #send message
         if message.author == client.user:
             pass
