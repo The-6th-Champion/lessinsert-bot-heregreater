@@ -193,7 +193,7 @@ async def togglesay(ctx):
         }, merge = True)
         await ctx.send("The say function is now enabled")
 
-@client.event()
+@client.event
 async def on_message(message):
     ref = db.collection("guilds").doc(message.guild.id)
     doc = ref.get()
