@@ -155,7 +155,7 @@ async def on_guild_join(self, guild):
     doc_ref.set({
             "prefix" : ">>",
             "toggle_say" : True
-        }, merge = True))
+        }, merge = True)
     channel = self.client.get_channel(792842806291988481)
     embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0x00ff00))
     await channel.send(embed=embed)
