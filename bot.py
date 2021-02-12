@@ -28,6 +28,11 @@ db = firestore.client()
 def get_prefix(client, message : discord.Message): ##first we define get_prefix
     doc_ref = db.collection("guilds").document(str(message.guild.id))
     data = doc_ref.get().to_dict()
+    if data["prefix"]==None:
+        doc_ref.set({
+            "prefix" : ">>"
+        })
+        data = doc_ref.get().to_dict()
     return str(data["prefix"]) #recieve the prefix for the guild id given
 
 intents.guilds = True
