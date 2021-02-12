@@ -25,14 +25,14 @@ cred = credentials.Certificate('stuffs.json')
 default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
 db = firestore.client()
-
-doc_ref = db.collection("guilds").document(str(msg.guild.id))
-data = doc_ref.get().to_dict()
-# now you have data.prefix as the prefix
+def get_prefix(client, message): ##first we define get_prefix
+    doc_ref = db.collection("guilds").document(str(message.guild.id))
+    data = doc_ref.get().to_dict()
+    return str(data.prefix) #recieve the prefix for the guild id given
 
 intents.guilds = True
 intents.members = True
-client = commands.Bot(command_prefix=commands.when_mentioned_or(str(data.prefix)), intents = intents)
+client = commands.Bot(command_prefix=(get_prefix), intents = intents, case_insensitive = True)
 client.remove_command("help")
 TOKEN = TOKEN = os.environ.get("TOKEN")
 
