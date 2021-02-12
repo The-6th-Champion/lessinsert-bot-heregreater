@@ -179,7 +179,7 @@ async def on_guild_remove(guild):
 @client.command(name = "togglesay", description = "This can toggle the auto-responses that are triggered from certain phrases like\n \'why\' and \'why not\'\n and\n \'Hello\' and \'Hi <name>")
 @commands.has_permissions(administrator = True)
 async def togglesay(ctx):
-    ref = db.collection("guilds").document(str(message.guild.id))
+    ref = db.collection("guild").document(str(message.guild.id))
     doc = ref.get()
     data = doc.to_dict()
     if data.toggle_say == True:
@@ -195,7 +195,7 @@ async def togglesay(ctx):
 
 @client.event
 async def on_message(message):
-    ref = db.collection("guilds").document(str(message.guild.id))
+    ref = db.collection("guild").document(str(message.guild.id))
     doc = ref.get()
     data = doc.to_dict()
     if data.toggle_say == True:
