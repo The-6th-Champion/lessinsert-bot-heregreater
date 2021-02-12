@@ -70,7 +70,7 @@ client.help_command = MyHelpCommand()
 
 
 # Commands
-@client.command(name = "ping" aliases=["pong"],description="Returns the latency of the bot.")
+@client.command(name = "ping", aliases=["pong"],description="Returns the latency of the bot.")
 async def ping(ctx):
     embed = discord.Embed(
         title="PING",
