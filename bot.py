@@ -182,7 +182,7 @@ async def togglesay(ctx):
     ref = db.collection("guild").document(str(message.guild.id))
     doc = ref.get()
     data = doc.to_dict()
-    if data.toggle_say == True:
+    if data["toggle_say"] == True:
         doc.set({
         "toggle_say" : False
         }, merge = True)
@@ -198,7 +198,7 @@ async def on_message(message):
     ref = db.collection("guild").document(str(message.guild.id))
     doc = ref.get()
     data = doc.to_dict()
-    if data.toggle_say == True:
+    if data{"toggle_say"} == True:
         #send message
         if message.author == client.user:
             pass
@@ -248,7 +248,7 @@ async def on_message(message):
         pass
 @client.command(description="message from the Creator about the bots chatting ability")
 async def sayinfo(ctx):
-    await ctx.send("Please do not be under the impression that this bot was made to offend. The chatting it does is merely for fun. please do not be offended by its replies, and if you do want something removed or changed, join the support server by doing `>>invite` and tell me through DMs or through <#781315950099693619>.\n-The Creator\n<insert name here>#4318")
+    await ctx.send("Please do not be under the impression that this bot was made to offend. The chatting it does is merely for fun. please do not be offended by its replies, and if you do want something removed or changed, join the support server by doing `>>invite` and tell me through DMs or through <#781315950099693619>. You can also discable the auto messages with the togglesay command.\n-The Creator\n<insert name here>#4318")
 
 
 # Cog stuff
