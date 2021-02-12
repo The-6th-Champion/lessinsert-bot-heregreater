@@ -29,7 +29,6 @@ def get_prefix(client, message : discord.Message): ##first we define get_prefix
     doc_ref = db.collection("guild").document(str(message.guild.id))
     doc = doc_ref.get()
     data = doc.to_dict()
-    print(data)
     if data["prefix"] == None:
         doc_ref.set({
             "prefix" : ">>"
@@ -139,10 +138,32 @@ async def ssay_error(error, ctx):
         await ctx.send(f"```\n{error}\n\nPlease try again and stuff.", embed = em1)
         raise error
 
-
-
-
-
+@client.command()
+@commands.check(is_it_me)
+async def mememe(ctx):
+    for guild in client.guilds:
+        doc_ref = db.collection("guild").document(str(guild.id))
+        doc_ref.set({
+            "prefix" : ">>",
+            "toggle_say" : True
+        }, merge = True)
+    await ctx.send("done?")
+            
+@client.event
+async def on_guild_join(self, guild):
+    doc_ref = db.collection("guild").document(str(guild.id))
+    doc_ref.set({
+            "prefix" : ">>",
+            "toggle_say" : True
+        }, merge = True))
+    channel = self.client.get_channel(792842806291988481)
+    embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0x00ff00))
+    await channel.send(embed=embed)
+@client.event
+async def on_guild_remove(self, guild):
+    channel = self.client.get_channel(792842806291988481)
+    embed = discord.Embed(title="Server Left <a:PensiveWobble:799822678386147388>", description=f"<Insert Bot Here> has left {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0xff0000))
+    await channel.send(embed=embed)
 # Cog stuff
 cogs = ['cogs.utils', 'cogs.moderation', 'cogs.fun', 'cogs.say', 'cogs.info'] #'cogs.events', 
 
