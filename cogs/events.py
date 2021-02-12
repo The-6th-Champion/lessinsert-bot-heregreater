@@ -13,3 +13,4 @@ class Events(commands.Cog):
 def setup(client):
   client.add_cog(Events(client))
   print("event is online")
+# will be deleted soon
