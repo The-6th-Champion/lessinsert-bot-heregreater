@@ -90,6 +90,7 @@ async def prefix(ctx):
         title='Prefix',
         description=f"This Bot's prefix is `>>`",
         color=discord.Color.blue())
+    await ctx.send(embed = embed1)
 
 #change prefix
 @client.command(name = "setprefix", description="changes prefix. You need Admin Permission")
@@ -108,7 +109,10 @@ async def setprefix(ctx, prefix = None):
             'prefix': prefix
         }, merge = True)
         await ctx.send(embed=embed2)
-
+@setprefix.error
+async def sp_error(error, ctx):
+    if isinstance(error, discord.ext.commands.errors.MissingPermissions):
+        await ctx.send("You are not an **Administrator**, or you don't have the **Administrator** permission")
 @client.command(hidden=True)
 @commands.check(is_it_me)
 async def sudosay(ctx,type,  location, *, content):
@@ -230,4 +234,38 @@ async def reloadcog(ctx, cogname = None, hidden = True):
     else:
         print('reloaded Cog Succesfully')
         await ctx.send(f"{cog} is restarted.")
+
+
+#funny joke
+@client.command(description="This is a command that will add you to the 6th champion disciple club. You can check your status with the `disciple` command. This is for fun, I do not mean to offend any religious beliefs. Have fun, and join the club!")
+async def bowdown(self, ctx, *, message=None):
+    ids = db.collection("disciples").get()
+    doc_ref = db.collection("disciples").document(str(ctx.author.id))
+    if message == None:
+        await ctx.send("Please recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
+    elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
+        await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
+    elif str(ctx.author.id) not in ids:
+        doc_ref.set(merge = True)
+        if ctx.guild.id == 764927590070353940:
+            role = discord.utils.get(ctx.guild.roles, name="<Disciple>")
+            user = ctx.message.author
+            await Member.add_roles(user, role)
+            await ctx.send("You have become one with the 6th Champion!")
+        else:
+            await ctx.send("You have become one with the 6th Champion!")
+    else:
+        await ctx.send(ctx.author.guild.id)
+        await ctx.send("You have already become one with the 6th Champion!")
+@client.command(description="This is a way to check if you are a follower of the 6th champion. dont worry this is a joke command, along with `bowdown` and I do not mean to offend any religious beliefs. Have fun, and join the club!")
+async def disciple(self, ctx, *, message=None):
+    ids = db.collection("disciples").get()
+    if str(ctx.author.id) == '654142589783769117':
+        await ctx.send(":open_mouth:...it is....an honor....it is actually you. :person_bowing: all hail The true **6th Champion**.")
+    elif str(ctx.author.id) == "347145371140489218":
+        await ctx.send("Greetings, my **Flamekeeper**, Defender of the 6th Champion")
+    elif str(ctx.author.id) in ids:
+        await ctx.send("You are a verified disciple of the 6th Champion!")
+    else:
+        await ctx.send("You have not been verfied as a disciple of the 6th Champion look at the `bowdown` command")
 client.run(TOKEN)
