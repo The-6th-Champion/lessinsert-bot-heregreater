@@ -10,7 +10,7 @@ from discord.ext import commands
 from pyppeteer import launch
 import asyncio
 import time
-
+#test comment moment
 isChattingClever = False
 class Fun(commands.Cog):
   
