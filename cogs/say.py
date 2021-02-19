@@ -8,7 +8,6 @@ class Say(commands.Cog):
   def __init__(self,client):
 
     self.client = client
-  db = firebase_admin.firestore.Client()
 
   
 
