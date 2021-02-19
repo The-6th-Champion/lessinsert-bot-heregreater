@@ -160,7 +160,7 @@ async def on_guild_join(guild):
 @client.event
 async def on_guild_remove(guild):
     channel = client.get_channel(792842806291988481)
-    embed = discord.Embed(title="Server Left <a:PensiveWobble:799822678386147388>", description=f"<Insert Bot Here> has left {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0xff0000))
+    embed = discord.Embed(title="Server Left <a:PensiveWobble:799822678386147388>", description=f"<Insert Bot Here> has left {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.name}#{guild.owner.discriminator}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0xff0000))
     await channel.send(embed=embed)
 
 

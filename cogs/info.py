@@ -31,7 +31,7 @@ class Info(commands.Cog):
             title="Server List",
             description="This is a List of servers <IBH> is in")
         sl = self.client.guilds
-        for x in range(len(sl)):
+        for x in sl:
             embed.add_field(name=x.name, value="<===========>", inline=False)
         await ctx.send(embed=embed)
     @commands.command()
