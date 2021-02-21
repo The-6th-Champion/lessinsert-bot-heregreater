@@ -3,28 +3,13 @@ from discord.ext import commands
 import os
 import asyncio
 import firebase_admin
-from firebase_admin import credentials, firestore
 import json
+from fb_init import db
 
 
 
-configvars = {
-    "type": "service_account",
-    "project_id": os.environ.get("project_id"),
-    "private_key": os.environ.get('private_key').replace('\\n', '\n'),
-    "client_email": os.environ.get("client_email"),
-    "client_id": os.environ.get("client_id"), 
-    "auth_uri": os.environ.get("auth_uri"),
-    "token_uri": os.environ.get("token_uri"),
-    "auth_provider_x509_cert_url": os.environ.get("auth_provider_x509_cert_url"),
-    "client_x509_cert_url": os.environ.get("client_x509_cert_url")
-}
 
-json.dump(configvars, open('stuffs.json', 'w'))
-cred = credentials.Certificate('stuffs.json')
-default_app = firebase_admin.initialize_app(cred)
 intents = discord.Intents.default()
-db = firestore.client()
 def get_prefix(client, message : discord.Message): ##first we define get_prefix
     doc_ref = db.collection("guild").document(str(message.guild.id))
     doc = doc_ref.get()
@@ -235,37 +220,4 @@ async def reloadcog(ctx, cogname = None, hidden = True):
         print('reloaded Cog Succesfully')
         await ctx.send(f"{cog} is restarted.")
 
-
-#funny joke
-@client.command(description="This is a command that will add you to the 6th champion disciple club. You can check your status with the `disciple` command. This is for fun, I do not mean to offend any religious beliefs. Have fun, and join the club!")
-async def bowdown(self, ctx, *, message=None):
-    ids = db.collection("disciples").get()
-    doc_ref = db.collection("disciples").document(str(ctx.author.id))
-    if message == None:
-        await ctx.send("Please recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
-    elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
-        await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
-    elif str(ctx.author.id) not in ids:
-        doc_ref.set(merge = True)
-        if ctx.guild.id == 764927590070353940:
-            role = discord.utils.get(ctx.guild.roles, name="<Disciple>")
-            user = ctx.message.author
-            await Member.add_roles(user, role)
-            await ctx.send("You have become one with the 6th Champion!")
-        else:
-            await ctx.send("You have become one with the 6th Champion!")
-    else:
-        await ctx.send(ctx.author.guild.id)
-        await ctx.send("You have already become one with the 6th Champion!")
-@client.command(description="This is a way to check if you are a follower of the 6th champion. dont worry this is a joke command, along with `bowdown` and I do not mean to offend any religious beliefs. Have fun, and join the club!")
-async def disciple(self, ctx, *, message=None):
-    ids = db.collection("disciples").get()
-    if str(ctx.author.id) == '654142589783769117':
-        await ctx.send(":open_mouth:...it is....an honor....it is actually you. :person_bowing: all hail The true **6th Champion**.")
-    elif str(ctx.author.id) == "347145371140489218":
-        await ctx.send("Greetings, my **Flamekeeper**, Defender of the 6th Champion")
-    elif str(ctx.author.id) in ids:
-        await ctx.send("You are a verified disciple of the 6th Champion!")
-    else:
-        await ctx.send("You have not been verfied as a disciple of the 6th Champion look at the `bowdown` command")
 client.run(TOKEN)
