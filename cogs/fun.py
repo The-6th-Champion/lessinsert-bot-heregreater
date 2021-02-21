@@ -115,3 +115,4 @@ class Fun(commands.Cog):
 def setup(client):
   client.add_cog(Fun(client))
   print("fun is online")
+
