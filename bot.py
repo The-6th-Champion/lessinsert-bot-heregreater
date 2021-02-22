@@ -150,7 +150,7 @@ async def on_guild_remove(guild):
 
 
 # Cog stuff
-cogs = ['cogs.utils', 'cogs.moderation', 'cogs.funclone',  'cogs.info'] #'cogs.events', 'cogs.say',
+cogs = ['cogs.utils', 'cogs.moderation', 'cogs.fun',  'cogs.info'] #'cogs.events', 'cogs.say',
 
 for cog in cogs:
     try:
