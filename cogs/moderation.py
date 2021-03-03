@@ -37,8 +37,8 @@ class Moderation(commands.Cog):
     else:
         raise error
 
-
-
+#bellow is the old ban command
+"""
     #ban command: bans user
   @commands.command(aliases = ["b"], description="Bans a user from the server.")
   @commands.has_permissions(ban_members=True)
@@ -67,8 +67,45 @@ class Moderation(commands.Cog):
     elif isinstance(error, discord.ext.commands.errors.BadArgument): 
         await ctx.send("Please specify a **valid** user!")
     else:
-        raise error
+        raise error"""
+  @commands.command(aliases = ['b', 'forceban', 'fb'], description = 'Bans a user from the server. This user doesn\'t have to be a member of the server to be banned')
+  @commands.has_permissions(ban_members = True)
+  async def ban(self, ctx, user, *, reason):
 
+    user = user.replace("<", "")
+    user = user.replace(">", "")
+    user = user.replace("@", "")
+    user = user.replace("!", "")
+    user_id = int(user)
+
+    #embed for server
+    banneduser = await self.client.fetch_user(user_id)
+    embed1 = discord.Embed(title = 'Banned :hammer:', description = "A user was banned from this server", color = discord.Color.darker_gray())
+    embed1.add_field(name = banneduser, value = f"- {banneduser.name} was successfully banned from this server")
+    embed1.add_field(name = "Reason", value = f"{reason}", inline = False)
+    embed1.set_thumbnail(url =  ctx.guild.icon_url)
+    #embed for user
+    embed2 = discord.Embed(title = 'Banned', description = f"You were banned from {ctx.guild.name}", color = discord.Color.darker_gray())
+    embed2.add_field(name = "Reason", value = f"{reason}", inline = False)
+    embed2.set_thumbnail(url =  ctx.guild.icon_url)
+    
+    await ctx.guild.ban(banneduser, reason = reason)
+    await banneduser.send(embed = embed2)
+    await ctx.send(embed = embed1)
+  @ban.error
+  async def ban_error(self, ctx, error):
+    if isinstance(error, discord.ext.commands.errors.MissingRequiredArgument): 
+        await ctx.send("Please specify a **valid** user! and **required** reason")
+    elif isinstance(error, discord.ext.commands.errors.MissingPermissions):
+        await ctx.send("You need the **ban members** permission")
+    elif isinstance(error, discord.ext.commands.errors.MemberNotFound):
+        await ctx.send("Please specify a **valid** user!")
+    elif isinstance(error, discord.ext.commands.errors.BadArgument): 
+        await ctx.send("Please specify a **valid** user! and **required** reason")
+    elif isinstance(error, discord.ext.commands.errors.CommandInvokeError): 
+        await ctx.send("Something went wrong. check my permissions.")
+    else:
+        raise error
 
   #unban command: unbans someone who is Banned
   @commands.command(aliases = ["ub"], description="unbans a user from the server.")
