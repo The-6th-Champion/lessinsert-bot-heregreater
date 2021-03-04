@@ -37,8 +37,8 @@ class Moderation(commands.Cog):
     else:
         raise error
 
-#bellow is the old ban command
-"""
+  #bellow is the old ban command
+  """
     #ban command: bans user
   @commands.command(aliases = ["b"], description="Bans a user from the server.")
   @commands.has_permissions(ban_members=True)
@@ -68,6 +68,8 @@ class Moderation(commands.Cog):
         await ctx.send("Please specify a **valid** user!")
     else:
         raise error"""
+
+      
   @commands.command(aliases = ['b', 'forceban', 'fb'], description = 'Bans a user from the server. This user doesn\'t have to be a member of the server to be banned')
   @commands.has_permissions(ban_members = True)
   async def ban(self, ctx, user, *, reason):
