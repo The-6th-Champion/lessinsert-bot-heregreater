@@ -2,32 +2,30 @@ import discord
 from discord.ext import commands
 import os
 import asyncio
-import firebase_admin
-import json
 from fb_init import db
 
 
-
-
-intents = discord.Intents.default()
 def get_prefix(client, message : discord.Message): ##first we define get_prefix
-    doc_ref = db.collection("guild").document(str(message.guild.id))
-    doc = doc_ref.get()
-    data = doc.to_dict()
-    if data["prefix"] == None:
-        doc_ref.set({
-            "prefix" : ">>"
-        })
-        data = doc_ref.get().to_dict()
+    try:
+        doc_ref = db.collection("guild").document(str(message.guild.id))
+        doc = doc_ref.get()
+        data = doc.to_dict()
+        if data["prefix"] == None:
+            doc_ref.set({
+                "prefix" : ">>"
+            })
+            data = doc_ref.get().to_dict()
+        prefix_list = []
+        return commands.when_mentioned_or(str(data["prefix"]), ">>")(client,message)
+    except AttributeError: return commands.when_mentioned_or(">>")(client, message) #recieve the prefix for the guild id given
+intents = discord.Intents.default()
 
-    return str(data["prefix"]) #recieve the prefix for the guild id given
 
 intents.guilds = True
 intents.members = True
 client = commands.Bot(command_prefix=(get_prefix), intents = intents, case_insensitive = True)
 client.remove_command("help")
 TOKEN = TOKEN = os.environ.get("TOKEN")
-
 
 # make sure I am doing this
 def is_it_me(ctx):
@@ -41,6 +39,7 @@ class MyHelpCommand(commands.MinimalHelpCommand):
         e = discord.Embed(color=discord.Color(0x9ef), description='')
         for page in self.paginator.pages:
             e.description += page
+        e.set_footer(text = f"Do `>>prefix` to see the custom prefix")
         await destination.send(embed=e)
 
 client.help_command = MyHelpCommand()
@@ -49,6 +48,16 @@ client.help_command = MyHelpCommand()
 
 
 # Commands
+@client.command(aliases = ["setp"], description = "change the presence of the bot. \n types: streaming, playing, listening or watching")
+@commands.check(is_it_me)
+async def setpresence(ctx, type1, *, presence):
+    if type1 ==  "streaming": await client.change_presence(activity=discord.Activity(type=discord.ActivityType.streaming, name=presence))
+    elif type1 ==  "playing": await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=presence))
+    elif type1 ==  "listening": await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=presence))
+    elif type1 ==  "watching": await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=presence))
+    else: await ctx.send("try again"); return
+    await ctx.send(f"Done! set presence to **{type1.capitalize()} {presence}**")
+
 @client.command(name = "ping", aliases=["pong"],description="Returns the latency of the bot.")
 async def ping(ctx):
     embed = discord.Embed(
@@ -63,7 +72,7 @@ async def credits(ctx):
     em = discord.Embed(
         title="Credits",
         description=
-        "Creator/Owner: <insert name here>#XXXX\nProfile Picture: <insert name here>#XXXX\nBig helpers and contributers: ElectronDev and Fumseck of Zeldevs, Isukali"
+        "Creator/Owner: The 6th Champion#3981\nProfile Picture: Isukali#XXXX\nBig helpers and contributers: Isukali"
     )
     em.set_footer(text = "If you found this command, have a cookie :cookie: lol. :)")
     await ctx.send(embed=em)
@@ -71,11 +80,21 @@ async def credits(ctx):
 #prefix command. gives bot prefix
 @client.command(name = "prefix", description="Returns the prefix of the bot. \nif you add an argument, it changes the bot's prefix.`BETA` (custom prefix doesnt work yet)")
 async def prefix(ctx):
-    embed1 = discord.Embed(
-        title='Prefix',
-        description=f"This Bot's prefix is `>>`",
-        color=discord.Color.blue())
-    await ctx.send(embed = embed1)
+    try:
+        doc_ref = db.collection("guild").document(str(ctx.guild.id))
+        data = doc_ref.get().to_dict()
+        data1 = data["prefix"]
+        embed1 = discord.Embed(
+            title='Prefix',
+            description=f"This Bot's prefix is `{data1}`",
+            color=discord.Color.blue())
+        await ctx.send(embed=embed1)
+    except:
+        embed2 = discord.Embed(
+            title='Prefix',
+            description="This Bot's prefix is `>>`",
+            color=discord.Color.blue())
+        await ctx.send(embed=embed2)
 
 #change prefix
 @client.command(name = "setprefix", description="changes prefix. You need Admin Permission")
@@ -94,10 +113,7 @@ async def setprefix(ctx, prefix = None):
             'prefix': prefix
         }, merge = True)
         await ctx.send(embed=embed2)
-@setprefix.error
-async def sp_error(error, ctx):
-    if isinstance(error, discord.ext.commands.errors.MissingPermissions):
-        await ctx.send("You are not an **Administrator**, or you don't have the **Administrator** permission")
+
 @client.command(hidden=True)
 @commands.check(is_it_me)
 async def sudosay(ctx,type,  location, *, content):
@@ -129,15 +145,18 @@ async def ssay_error(error, ctx):
     for guild in client.guilds:
         doc_ref = db.collection("guild").document(str(guild.id))
         doc_ref.set({
-            "prefix" : ">>"
+            "prefix" : ">>",
+            "toggle_say" : True
         }, merge = True)
     await ctx.send("done?")
-            
+
+  
 @client.event
 async def on_guild_join(guild):
     doc_ref = db.collection("guild").document(str(guild.id))
     doc_ref.set({
-            "prefix" : ">>"
+            "prefix" : ">>",
+            "toggle_say" : True
         }, merge = True)
     channel = client.get_channel(792842806291988481)
     embed = discord.Embed(title="New Server Joined!!!!", description=f"<Insert Bot Here> has Joined {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0x00ff00))
@@ -145,8 +164,15 @@ async def on_guild_join(guild):
 @client.event
 async def on_guild_remove(guild):
     channel = client.get_channel(792842806291988481)
-    embed = discord.Embed(title="Server Left <a:PensiveWobble:799822678386147388>", description=f"<Insert Bot Here> has left {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.name}#{guild.owner.discriminator}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0xff0000))
+    embed = discord.Embed(title="Server Left <a:PensiveWobble:799822678386147388>", description=f"<Insert Bot Here> has left {guild.name}.\nThe ID is {guild.id}.\nIt is owned by {guild.owner.mention}.\nIt's membercount is {guild.member_count}.", color = discord.Color(0xff0000))
     await channel.send(embed=embed)
+
+
+
+#Say
+#
+#
+
 
 
 # Cog stuff
@@ -165,10 +191,23 @@ async def on_ready():
     await client.change_presence(
         activity=discord.Activity(
             type=discord.ActivityType.watching,
-            name="404: <insert movie here> not found"))
+            name="For >>help and >>invite"))
     await client.get_channel(770401102981627924).send("im online")
     print("<Bot is Ready.>")
 
+#Error handling
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, discord.ext.commands.errors.CommandNotFound): 
+        await ctx.send("This command doesnt exist. Try again!")
+    elif isinstance(error, discord.ext.commands.errors.MissingPermissions):
+        await ctx.send("Make sure you and I both have the permissions need for this command.")
+    elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
+        await ctx.send("You are missing a required parameter to this command")
+    elif isinstance(error, discord.ext.commands.errors.NoPrivateMessage):
+        await ctx.send("This command doesnt work in a DM.")
+    else:
+        raise error
 
 #Load cog
 @client.command(hidden=True)
@@ -219,5 +258,5 @@ async def reloadcog(ctx, cogname = None, hidden = True):
     else:
         print('reloaded Cog Succesfully')
         await ctx.send(f"{cog} is restarted.")
-
+        
 client.run(TOKEN)
