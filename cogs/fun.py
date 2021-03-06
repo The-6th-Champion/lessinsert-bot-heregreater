@@ -42,7 +42,7 @@ class Fun(commands.Cog):
     elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
       await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
     elif str(ctx.author.id) not in db.collection("disciples").get():
-      db.collection("disciples").add(document_id = str(ctx.author.id) document_data = {"no": False})
+      db.collection("disciples").add(document_id = str(ctx.author.id), document_data = {"no": False})
       if ctx.guild.id == 764927590070353940:
         role = discord.utils.get(ctx.guild.roles, name="<Disciple>")
         user = ctx.message.author
