@@ -42,7 +42,7 @@ class Fun(commands.Cog):
     elif message != "I bow down to my holy lord, The 6th Champion, and surrender myself to His cause":
       await ctx.send("Please properly recite the pledge: I bow down to my holy lord, The 6th Champion, and surrender myself to His cause")
     elif str(ctx.author.id) not in db.collection("data").get():
-      db.collection("data").add(str(ctx.author.id))
+      db.collection("disciples").create(str(ctx.author.id))
       if ctx.guild.id == 764927590070353940:
         role = discord.utils.get(ctx.guild.roles, name="<Disciple>")
         user = ctx.message.author
@@ -55,11 +55,13 @@ class Fun(commands.Cog):
       await ctx.send("You have already become one with the 6th Champion!")
   @commands.command(description="This is a way to check if you are a follower of the 6th champion. dont worry this is a joke command, along with `bowdown` and I do not mean to offend any religious beliefs. Have fun, and join the club!")
   async def disciple(self, ctx, *, message=None):
+    ids = db.collection("disciples").get()
+    
     if str(ctx.author.id) == '654142589783769117':
       await ctx.send(":open_mouth:...it is....an honor....it is actually you. :person_bowing: all hail The true **6th Champion**.")
     elif str(ctx.author.id) == "347145371140489218":
       await ctx.send("Greetings, my **Flamekeeper**, Defender of the 6th Champion")
-    elif str(ctx.author.id) in ids:
+    elif str(ctx.author.id):
       await ctx.send("You are a verified disciple of the 6th Champion!")
     else:
       await ctx.send("You have not been verfied as a disciple of the 6th Champion")
