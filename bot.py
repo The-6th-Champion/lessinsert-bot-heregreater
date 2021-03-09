@@ -250,8 +250,7 @@ async def reloadcog(ctx, cogname = None, hidden = True):
         return
         await ctx.send("-_-")
     try:
-        client.unload_extension(cogname)
-        client.load_extension(cogname)
+        client.reload_extension(cogname)
     except Exception as e:
         print(f"Could not reload cog {cog}:{str(e)}")
         await ctx.send("-_-")
