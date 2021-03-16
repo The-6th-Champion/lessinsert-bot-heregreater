@@ -12,12 +12,12 @@ def get_prefix(client, message : discord.Message): ##first we define get_prefix
         data = doc.to_dict()
         if data["prefix"] == None:
             doc_ref.set({
-                "prefix" : ">>"
+                "prefix" : "ib"
             })
             data = doc_ref.get().to_dict()
         prefix_list = []
-        return commands.when_mentioned_or(str(data["prefix"]), ">>")(client,message)
-    except AttributeError: return commands.when_mentioned_or(">>")(client, message) #recieve the prefix for the guild id given
+        return commands.when_mentioned_or(str(data["prefix"]), "ib")(client,message)
+    except AttributeError: return commands.when_mentioned_or("ib")(client, message) #recieve the prefix for the guild id given
 intents = discord.Intents.default()
 
 
